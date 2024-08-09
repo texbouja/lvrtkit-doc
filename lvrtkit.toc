@@ -1,0 +1,54 @@
+\babel@toc {french}{}\relax 
+\contentsline {chapter}{\numberline {1}Manuel de l'utilisateur}{2}{chapter.1}%
+\contentsline {section}{\numberline {I}Historique des versions}{3}{section.1.1}%
+\contentsline {section}{\numberline {II}Installation et normalisation}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {A}Installation des fichiers du projet}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {B}Fichiers style du projet}{7}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {C}Conventions de nomenclature des fichiers}{9}{subsection.1.2.3}%
+\contentsline {subsubsection}{\numberline {1}Exemples}{10}{subsubsection.1.2.3.1}%
+\contentsline {subsection}{\numberline {D}Contenu des fichiers}{10}{subsection.1.2.4}%
+\contentsline {subsection}{\numberline {E}Normalisation des fichiers de bases}{10}{subsection.1.2.5}%
+\contentsline {subsection}{\numberline {F}À propos de typographie}{11}{subsection.1.2.6}%
+\contentsline {subsection}{\numberline {G}Rigide ou élastique}{13}{subsection.1.2.7}%
+\contentsline {subsection}{\numberline {H}Histoire de séparation}{15}{subsection.1.2.8}%
+\contentsline {subsection}{\numberline {I}Plaidoyer pour les solutions de multicolonnage}{16}{subsection.1.2.9}%
+\contentsline {section}{\numberline {III}Traitement des fichiers de base}{16}{section.1.3}%
+\contentsline {subsection}{\numberline {A}Conventions de notation}{17}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {B}Titres de sections et table des matières}{19}{subsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1}Sections et table des matières générales}{19}{subsubsection.1.3.2.1}%
+\contentsline {subsubsection}{\numberline {2}La commande {\color {spot}\CMD {subchapter}}}{20}{subsubsection.1.3.2.2}%
+\contentsline {subsubsection}{\numberline {3}Titres des sessions de TP}{21}{subsubsection.1.3.2.3}%
+\contentsline {subsubsection}{\numberline {4}Styles des titres}{22}{subsubsection.1.3.2.4}%
+\contentsline {subsubsection}{\numberline {5}Tables des matières partielles}{25}{subsubsection.1.3.2.5}%
+\contentsline {subsection}{\numberline {C}Objectifs et ordre}{25}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {D}Programme et commentaires}{25}{subsection.1.3.4}%
+\contentsline {subsubsection}{\numberline {1}Les commandes principales}{25}{subsubsection.1.3.4.1}%
+\contentsline {subsubsection}{\numberline {2}Outils annexes}{29}{subsubsection.1.3.4.2}%
+\contentsline {subsubsection}{\numberline {3}Marquage des paragraphes du programme}{30}{subsubsection.1.3.4.3}%
+\contentsline {subsection}{\numberline {E}Des titres moins contraignants}{31}{subsection.1.3.5}%
+\contentsline {subsection}{\numberline {F}Des listes plus expressives}{34}{subsection.1.3.6}%
+\contentsline {subsubsection}{\numberline {1}Tutoriel}{35}{subsubsection.1.3.6.1}%
+\contentsline {subsubsection}{\numberline {2}La syntaxe}{39}{subsubsection.1.3.6.2}%
+\contentsline {subsubsection}{\numberline {3}Les listes numérotées}{40}{subsubsection.1.3.6.3}%
+\contentsline {subsection}{\numberline {G}L'environnement multicolonne pour simuler des tableaux}{42}{subsection.1.3.7}%
+\contentsline {subsubsection}{\numberline {1}Tutoriel}{43}{subsubsection.1.3.7.1}%
+\contentsline {subsubsection}{\numberline {4}Exemples}{47}{subsubsection.1.3.6.4}%
+\contentsline {paragraph}{Exemple 1}{47}{subsubsection.1.3.6.4}%
+\contentsline {paragraph}{Exemple 2}{48}{lstnumber.-49.15}%
+\contentsline {paragraph}{Exemple 3}{48}{lstnumber.-50.17}%
+\contentsline {subsubsection}{\numberline {5}Syntaxe Complète}{49}{subsubsection.1.3.6.5}%
+\contentsline {subsubsection}{\numberline {6}Outils annexes}{52}{subsubsection.1.3.6.6}%
+\contentsline {subsection}{\numberline {G}Notes de bas de page et éléments flottants}{52}{subsection.1.3.7}%
+\contentsline {subsection}{\numberline {H}Recommendations pour la définition de nouvelles commandes}{52}{subsection.1.3.8}%
+\contentsline {section}{\numberline {IV}Construction d'un fichier maître}{53}{section.1.4}%
+\contentsline {subsection}{\numberline {A}Options de \texttt {cpgelvrt}}{53}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {B}Commandes principales}{54}{subsection.1.4.2}%
+\contentsline {subsubsection}{\numberline {1}Exemple: }{55}{subsubsection.1.4.2.1}%
+\contentsline {subsection}{\numberline {C}Création d'une couverture}{56}{subsection.1.4.3}%
+\contentsline {subsubsection}{\numberline {1}Exemple}{56}{subsubsection.1.4.3.1}%
+\contentsline {section}{\numberline {V}Informations supplémentaires}{56}{section.1.5}%
+\contentsline {subsection}{\numberline {A}Mise en page}{56}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {B}Polices de caractères}{57}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {C}Couleur}{57}{subsection.1.5.3}%
+\contentsline {subsection}{\numberline {D}Extensions utilisées par les fichiers styles}{58}{subsection.1.5.4}%
+\contentsfinish 

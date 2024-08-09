@@ -1,0 +1,53 @@
+\documentclass[other,openany]{cpgelvrt}
+
+\usepackage{xparse,expl3,etoolbox}
+\cslet{count1}\arabic 
+\csdef{countA}{\Alph}
+\csdef{countS}{\thesection}
+\ExplSyntaxOn
+\tl_new:N \l_replace_tl
+\cs_generate_variant:Nn \tl_replace_all:Nnn { Nnf }
+\cs_new:Npn \my_replace:n #1 #2 #3
+{
+ \tl_set:Nn \l_replace_tl {#3}
+ \tl_replace_all:Nnn \l_replace_tl { |#1| } { \csuse{count#1}{#2}  }
+ %\tl_use:N \l_replace_tl
+ \show\l_replace_tl
+}
+
+\NewDocumentCommand \replace { mmm }
+{
+ \my_replace:n { #1 } { #2 } { #3 }
+}
+\ExplSyntaxOff
+\begin{document}
+
+\section{Une section}
+
+\begin{enumerate}[label=\thesection.\arabic{enumi}]
+    \item Test
+\end{enumerate}
+
+% \pcit 1-1
+%     \pcit<> 2-1
+%         \pcnum<l=|S|.|i|> 3
+%     \bit 2-2
+% \pcit 1-2
+% \shutall
+
+\makeatletter
+\def\state{%
+    \edef\tmp{\csmeaning{\list@csname @\list@type @depth}}
+    envdepth = \@xp\strip@prefix\tmp
+    \quad 
+    listdepth = \the\@listdepth
+}
+\makeatother
+\pcnum<label=|S|.|1|> \state
+\pcnum<label=|E|.|a|> \state
+\pcnum<> \state
+\pcit \state
+\pcnum---- - %\state  
+\pcnum \state
+\shutall
+\end{document}

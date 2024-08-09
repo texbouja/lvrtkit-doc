@@ -1,0 +1,2083 @@
+\documentclass[other,openany]{cpgelvrt}
+
+\usepackage{metalogo}
+\usepackage{soul}
+\usepackage{subfiles}
+\usepackage{lvrtdockit}
+\tcbuselibrary{listings, hooks}
+
+
+\titleformat{\paragraph}[runin]
+	{\color{cgbluetext}\TitlingFont\itshape}
+	{}
+	{0pt}
+	{#1~:~}
+
+\colorlet{spot}{cgbluetext}
+\colorlet{boxframe}{cgorangestroke}
+\colorlet{boxfill}{cgorangefill}
+\colorlet{fs}{cgorangetext}
+\def\shr{\vskip-.25\parskip}
+\def\lvvm{\leavevmode\\[3pt plus 1pt minus .5pt]}
+
+
+\let\CMD\cmd
+\renewcommand\cmd[1]{{\spotcolor\CMD{#1}}}
+\let\ENV\env
+\renewcommand\env[1]{{\spotcolor\ENV{#1}}}
+\let\LEN\len
+\renewcommand\len[1]{{\color{cgorangetext}\LEN{#1}}}
+\let\OPT\opt
+\renewcommand\opt[1]{{\spotcolor\OPT{#1}}}
+\let\PRM\prm 
+\renewcommand\prm[1]{{\spotcolor\PRM{#1}}}
+\let\FILE\file
+\renewcommand\file[1]{{\color{fs}\FILE{#1}}}
+\let\STY\sty
+\renewcommand\sty[1]{{\color{fs}\STY{#1}}}
+\newrobustcmd*{\rac}[1]{\hbox to1.3cm{\hss\small rac: \verbatimfont\color{fs} #1}}
+\newrobustcmd*{\sprm}[1]{%
+  \mbox{%
+    {\verbatimfont<}\prm{#1}% 
+    {\verbatimfont>}}}
+
+\usepackage{shortvrb}
+\MakeShortVerb{\|}
+
+%\usepackage{listingsutf8} 
+%\usepackage{listings}
+\lstset{%%
+	%preset=\rule{\linewidth}{.4pt},
+     %frame=lr,%
+     language=[LaTeX]TeX,%
+morekeywords={bcomment,eprogram,bprogram,setlength,textwidth,includebase,tableofcontents,tpsection,settpsection,unsettpsection,maketitle,insertpart,chapter,subchapter,section,subsection,subsubsection,paragraph,subparagraph,markparacom,unmarkparacom,nbprogram,setinfo,setstretch,SetParskip,newsimplifieditemize,interrule,customtitle,interskip,pcit,pcclose,bcolumn,ecolumn,crule,bperiode},
+%      float=p,
+% %     codefile=\jobname-\theltxexample.tex,
+      basicstyle=\ttfamily,%
+% %     identifierstyle=\color{-Fond},%
+      keywordstyle=\color{cgbluetext},%
+%      commentstyle=\itshape\color{cggraytext},%
+%      columns=flexible,
+%      tabsize=2,%
+%      showspaces=false,%
+%      showstringspaces=false,%
+      breaklines=true,%
+%      backgroundcolor=\color{cgorangefill!15},%
+%      fillcolor=\color{white},
+%      framesep=1pt,
+%      rulesep=2pt,
+%      breakautoindent=true,%
+%      xleftmargin=2em,%
+% %      xrightmargin=4pt%
+%       captionpos=t,
+%       belowskip=\medskipamount,
+%       aboveskip=\smallskipamount,
+%       numberbychapter,
+%       numbers=left,numberstyle=\spotcolor\ttfamily\small,
+      literate=
+          {è}{{\`e}}1 
+          {é}{{\'e}}1
+          {ê}{{\^e}}1
+          {à}{{\`a }}1
+          {â}{{\^a}}1 
+          {ù}{{\`u}}1
+          {ô}{{\^o}}1
+          {î}{{\^i}}1,
+}
+\NewTCBListing[auto counter]{latex}{!O{}}
+     {skin=enhanced,
+     listing only,
+     listing style=tcblatex,
+     colback=cgorangefill!10,
+     breakable,
+     underlay={\node [anchor=east,font=\footnotesize\ttfamily,
+     text=black!70]
+          at ([yshift=-5pt]frame.north east) 
+          {\xdef\THEtcbcounter{\thetcbcounter}code \thetcbcounter};}, 
+     fonttitle=\ttfamily\footnotesize, 
+     bottomtitle=0pt,  
+     bottom=0pt, top=5pt, left=3pt, right=3pt,
+     colframe=strokecol,
+     boxrule=.4pt,
+     %frame left margin=2pt,
+     #1}
+\def\examplehead{{\small\color{black!70}\sffamily Résultat du \ttfamily code \THEtcbcounter :}}
+\tcbset{%
+     lat/.style={
+          listing above* text, 
+          after=\par\medskip\examplehead 
+     },
+     lot/.style={
+          listing outside text, 
+          righthand ratio=#1,
+          before lower app=\setlist*{nosep}\examplehead
+     },
+     lot/.default=.5,
+     opts/.style={listing options={#1}}
+}
+\hypersetup{
+			pdftitle={Manuel de cpgelvrt.cls},
+			pdfauthor={Sadik Boujaida},
+			pdfsubject={Pour le CNIPE},
+			colorlinks,
+			linkcolor=cgbluetext,
+			pdfhighlight=/O,
+			}
+
+\renewcommand{\nobreakspace}{\relax}
+
+
+\def\main{\ding{42}}
+\def\ciseau{\ding{33}}
+\def\plume{\ding{50}}
+\def\quatre{\ding{70}}
+\def\cinq{\ding{72}}
+\def\oursin{\ding{88}}
+\def\disque{\ding{108}}
+\def\lignetab{\ding{110}}
+\def\losange{\ding{117}}
+\def\pointe{\ding{228}}
+\def\sensh{\ding{229}}
+\def\sensb{\ding{230}}
+\def\fleche{\ding{224}}
+\def\fflotante{\ding{235}}
+
+
+
+
+
+\title{Manuel d'utilisation
+des fichiers du projet des livrets des programmes CPGE
+\ttfamily version 0.6}
+\date{juillet 2011}
+\author{CNIPE}
+
+ 
+\let\police\textsc
+\begin{document}
+
+
+
+
+
+\setcounter{secnumdepth}{5}
+\lvrtsetfont{subsubsection}{\large}
+\setcounter{tocdepth}{5}
+
+
+\renewcommand\thetable{\enskip\Roman{section}.\arabic{table}}
+\def\tableautorefname{tableau}
+
+\newgeometry{asymmetric,reversemp,includemp,marginparwidth=1.5cm,vmargin={2cm,3cm},hmargin={1cm,1cm}}
+
+\pgfdeclareimage[height=.25\textheight]{logomen}{LogoMENPS.pdf}
+
+
+\AddToShipoutPictureBG{\relax}
+\begin{titlepage}
+\centering\color{cgbluetext}\TitlingFont
+% {\Huge\bfseries\def\odot{\mathcolor{cgorangetext}{\cdot}}
+% C $\odot$ N $\odot$ I $\odot$ P $\odot$ E}
+\tikz\node[anchor=north,fill=pagefill, yshift=1cm]{\pgfuseimage{logomen}};
+
+\vfill
+\raggedright
+\textcolor{cgorangetext}{\fontsize{32}{32}\bfseries \kern\fboxsep Manuel de l'utilisateur\kern\fboxsep}
+
+\vskip 0pt plus .1fill
+{\Huge
+{\bfseries Fichiers de style \LaTeX\par}
+\LARGE
+\setbox0\hbox{\textit{\color{cgorangetext}pour}\kern.5em}
+\setstretch{.9}
+\hangindent=\wd0 \unhcopy0
+\scshape\huge
+la production des livrets 
+des programmes 
+des classes préparatoires
+\\[-1ex]
+\hfill\color{cgorangetext}\rule{\hsize-\wd0}{2pt}
+\par}
+\vfill
+\raggedleft\Large\ttfamily\color{cgorangetext} 
+version 1.0beta
+\end{titlepage}
+
+\renewcommand\chaptername{}
+
+\chapter{Manuel de l'utilisateur}
+
+\begin{objectif}
+Ce manuel est destiné à tous les intervenants dans la chaine de production des livrets des programmes des {\scshape cpge}, les rédacteurs, comme ceux qui ont une responsabilité de relecture ou de mise en forme finale. L'objectif est d'harmoniser l'apparence des programmes des différentes matières  et de fournir une architecture solide et durable. 
+
+L'implémentation à été réalisée selon l'un des principes fondamentaux du système \LaTeX{}:  la séparation entre sémantique et éléments de présentation. Les programmes sont appelés à changer donc la qualité et la clarté des fichiers sources est une condition fondamentale pour pouvoir poursuivre son évolution sans avoir besoin à chaque fois de réinventer la roue. La tâche des rédacteurs de programmes sera la structuration logique du contenu sans avoir à se soucier des aspects de la présentation. Cette dernière sera la responsabilité des fichiers style du projet et de l'équipe de production.  
+\end{objectif}
+\begin{mini}[Trop long?]
+Ce manuel est long, très long. Il reflète néanmoins le soin apporté à l'élaboration du projet. À mi-chemin entre manuel technique et tutoriel, il ne s'interdit pas de déborder sur des thèmes qui ne sont pas en rapport direct avec son sujet mais qui aident à expliquer les choix qui ont été faits. Dans les versions précédentes il faisait uniquement office de manuel technique. À l'utilisation, les intervenants, à cause des lacunes ou de la mauvaise documentation, se sont sentis obligés d'ajouter des fonctionnalités pour contourner les défficiences apparentes du projet. Maleureusement cela entraient parfois en concurrence, ou en contradiction, avec les fichiers styles. C'est ce qui explique le changement de paradigme dans la rédaction de ce manuel. L'équipe de développement espère que celui-ci contribuera à enrichir leurs expérience avec le système \LaTeX{} en général et non seulement vis à vis du projet.
+
+\medskip
+Une version plus courte de ce document est préparée à partir du même matériel. Elle se limite à la liste des commandes et de leurs options avec leurs descriptions. Celle-ci servira de manuel de référence au sens plus strict une fois l'utilisateur familiarisé avec les concepts généraux décrit dans cette version.
+\end{mini}
+
+\begin{mini}[Niveau exigible] 
+     pour bien utiliser les fichiers du projet il suffit d'être familier avec le système \LaTeX{} en général. 
+     Néanmoins une consultation de ce manuel chaque fois que c'est nécessaire peut s'avérer indispensable pour rester en conformité avec les exigences du projet.
+\end{mini}
+
+\begin{mini}[|texdoc|, mon précieux...]
+     Si vous avez fait une installation complète de votre distribution \LaTeX{} alors vous avez plusieurs giga-octets de documentation sur votre système. Cela inclut les documentations de pratiquement tous les packages, des documentations sur \TeX{} et \LaTeX{} eux mêmes, certains magazines libre de droit... 
+
+     Les deux distributions majeures sont accompagnées d'un utilitaire en ligne de commande : |texdoc|. Ouvrez votre console et tapez par exemple 
+
+     \lstinline+texdoc source2e+
+
+     et vous serez surpris de voir tout le code source commenté et catégorisé de \LaTeX{} (\LaTeX{} est entièrement écrit en langage \TeX{} et non en langage compilé). Un autre document intéressant pour les utilisateurs avancés s'obtient avec
+     
+     \lstinline+texdoc texbytopic+
+
+     Pour une utilisation normale, vous pouvez consulter la documentation d'un package en donnant son nom en argument à |texdoc|. Par exemple 
+
+     \lstinline+texdoc geometry+
+\end{mini}
+
+
+\section{Historique des versions}
+
+\subsection*{Version \texttt{1.0beta}}
+Cette mise à jour est une version majeur des fichiers style du projet. Elle essaye de combler les lacunes des versions précédentes et prend encore mieux en considération \emph{l'évolutivité du projet}. Les programmes sont susceptibles d'être mis à jour et les intervenants peuvent changer. Pour les programmes, il faut que les fichiers sources soient les plus propres et les plus clairs possibles d'où la nécessité d'outils auto-informatifs qui reflètent la sémantique du contenu sans trop encombrer la syntaxe.  Pour les utilisateurs, il faut que la prise en main soit la plus naturelle possible ce qui passe par la définition de commandes ergonomiques et surtout par une documentation accessible et bien rédigée.   
+
+Les principaux ajouts sont: 
+\begin{itemize}
+     \item les livrets sont désormais produits par défaut en |11pt| au format |19cmx24cm| (au lieu de |17cmx24cm| qui est mal adapté à du contenu en 2 colonnes). Le fichier de classe supporte aussi une option appelée \opt{a4} qui produit le livret au format |A4| pour une impression à domicile. Rappelons qu'il est possible de changer à volonté le format avec les options \opt{width} et \opt{height} de la classe;
+     \item  un restylage très léger des titres;
+     \item étant le principal outil des versions précédente, l'environnement bicolonne a été enrichi d'une interface de personnalisation  de type clé/valeur. Il est maintenant possible d'altérer de façon simple la largeur des colonnes, les sauts verticaux à l'intérieur et à l'extérieur de l'environnement, l'activation d'un filet de séparation... Il est aussi possible d'enregistrer des configurations pour ensuite les utiliser elles mêmes comme options.
+     \item une version plus générale (encore en phase de test) de l'environnement bicolonne pour pouvoir simuler des tableaux avec plus que deux colonnes; 
+     \item les listes (\env{enumerate}, \env{itemize}...) se comportent mieux dans l'environnement multicolonne ou dans un tableau. Des outils pour régler leurs propriétés et pour créer de nouvelles structures plus ergonomiques ont été ajoutés;  
+     \item des mécanismes plus simples que ceux standards (de base il n'y en a aucun) pour changer le style des titres et de leur numérotation. Il va de soit que ceux-ci devraient être utilisés avec beaucoup de précaution. Ils sont en fait destinés à l'équipe de production; 
+     \item un mécanisme pour créer à la volée et de manière simple des commandes pour insérer des titres typographiquement corrects et avec compteurs intégrés; 
+     \item la possibilité de produire à partir du même matériel, des documents plus adaptés à une consultation sur écran (tablette numérique ou smartphone).
+     \item une meilleure gestion des erreurs; 
+     \item l'ajout de deux nouveaux fichiers styles \file{lvrtbase} et \file{lvrtmath} qui apportent de nouvelles fonctionnalités pour un usage interne par les autres fichiers style et aussi directement dans les fichiers de bases; 
+     \item ce manuel a été considérablement étoffé pour qu'il serve mieux son propos~: garantir la pérennité des fichiers du projet.
+\end{itemize} 
+
+\begin{mini}
+     Cette version est ainsi munie, pour les situations non prévues, d'outils qui permettent d'étendre les fonctionnalités des fichiers style sans nuire à l'harmonie globale des documents. 
+\end{mini}
+
+\begin{mini}[Un investissement rentable]
+Les utilisateurs intéressés pourront utiliser toutes les nouvelles fonctionnalités en dehors du projet. Outre l'implémentation spécifique et plus pratique des listes et des commandes de titrage, l'environnement multicolonne peut avoir des applications intéressantes comme  maintenir un cahier de texte ou rédiger un rapport d'inspection. Voir la dernière section de ce document pour une exploration de ces possibilités.   
+\end{mini}
+
+\begin{mini}[Vieux bogue]
+Depuis la dernière version de ce kit (plus de dix ans maintenant) le package \texttt{paracol} a gagné en maturité. Apparemment le bogue des ruptures des page ne se produit plus. 
+\end{mini}
+\subsection*{Version \texttt{0.61}} 
+Plus de soins porté à la présentation de certains aspects des documents, notamment les tables de matières et les couvertures.
+
+Le recours à certaines extensions à été supprimé (notamment |framed|). Le fichier |gtdnames.def| (qui définissait plus de 100 commandes \LaTeX{}, toutes des raccourcis de noms de savants... fâcheuse maladresse) à été supprimé du projet. Les fichiers de bases qui l'utilisait ont été mis à jours pour utiliser la commande \cmd{nom}.
+
+Les  fichiers du projet ont subit une phase préliminaire de débogage. Certains bogues subsistent.  
+
+\begin{mini}
+Un bogue particulièrement gênant, et dont l'origine est liée à l'extension |paracol|, survient parfois lorsqu'une page doit commencer par un titre en mode unicolonne. Il peut arriver que la page précédente disparaisse complètement. 
+\end{mini}
+\begin{adjusted}
+\begin{description}[font=\color{cgorangetext}\bfseries]
+\item [Symptôme] On peut détecter si une telle erreur s'est produite en comparant le numéro de la dernière page avec le nombre de pages que comporte réellement le document \textsc{pdf}.
+\item[Diagnostique]
+On peut ensuite localiser rapidement la page où s'est produit le problème, en procédant par dichotomie sur les numéros de page. La page qui suit la page manquante commence souvent par un titre (\cmd{section} ou \cmd{subsection}). Le titre est alors écrit en couleur normale (noire) au lieu de respecter le style général du document.
+
+\item [Correctif] remplacer la commande \cmd{section}\mprm{titre} qui commence la page qui suit la page manquante par \cmd{bprogram}\,[\cmd{section}\mprm{titre}]\,. Noter qu'il n'est pas nécessaire d'initialiser un autre bloc \env{bprogram} dans le cas où un paragraphe du programme suit immédiatement le titre. La commande \cmd{bprogram} peut être remplacée par \cmd{bcomment} si c'est un commentaire qui suit le titre. Faire de même s'il s'agit plutôt d'une commande \cmd{subsection}\mprm{sous-titre}.
+ 
+Une solution globale serait de toujours insérer les titres par le biais de la commande \cmd{bprogram} ou \cmd{bcomment}, dans le cas où on doit fermer l'environnement multicolonne juste pour insérer un titre et y revenir immédiatement après. 
+
+Les commandes \cmd{Section}, \cmd{subSection} et \cmd{subsubSection}
+% et \cmd{tpSection} 
+ont été ajoutées pour faciliter l'adoption de cette dernière démarche pour un fichier déjà traité. Chacune de ces commandes remplace la commande sans le “S” majuscule et s'occupe de l'insertion du titre au sein d'une commande \cmd{bprogram}, (Il suffit d'utiliser la fonction |chercher/remplacer| de votre éditeur \LaTeX{} sur le mot |section|, mais de fa\c con incrémentale pour ne pas risquer de l'appliquer à un titre suivi de texte en unicolonne)
+\item [N.B.] l'extension |paracol| est essentielle au projet et aucun extension équivalente ne convient vraiment. 
+\end{description}
+\end{adjusted}
+
+\subsection*{Version \texttt{0.6}}
+Des arrangements ont été effectués dans |cpgelvrt.cls| pour apporter (du moins ne plus empêcher) le  support du moteur \LuaTeX{}. L'extension |paracol| est maintenant utilisée pour l'environnement multicolonne. Un mécanisme de marquage (numérotation) des paragraphes a été ajouté. Il est désactivé par défaut.
+
+\section{Installation et normalisation}
+
+\subsection{Installation des fichiers du projet}
+Pour rester conforme à l'architecture prévue par le projet il faut:
+\pcit prévoir un dossier de travail qui peut porter un nom arbitraire mais qui doit contenir au moins trois dossiers:  
+\pcit<labelindent=\leftmargin+3ex>[\file{Base}] 
+pour héberger les fichiers de base des programmes; 
+\pcit[\file{Generic}] pour contenir les fichiers maîtres génériques qui permettent de compiler les fichiers de base;
+\pcit[\file{Masters}] pour contenir les fichiers maîtres de production des livrets. 
+\pcclose 
+Voir la section \ref{sec:orga}, \nameref{sec:orga} pour plus de détails.
+\pcit Installer les fichiers style du projet en suivant la procédure décrite ci-dessus. 
+\pcclose
+
+
+Un dossier nommé \file{texmf} est disponible dans la racine de l'archive du projet. Copier ce dossier et placez-le dans 
+\pcit votre dossier personnel si vous êtes sous MS Windows ou Linux. 
+\begin{mini}
+     Sous Windows vous pouvez  accéder à votre dossier personnel en allant dans |C:\Users\VOTRENOMDUTILSATEUR|, remplacez |Users| par |Utilisateurs| si vous utilisez une version française de Windows. Sous Linux, c'est simplement le dossier qui apparait sous le nom |Home| dans votre gestionnaire de fichiers.
+\end{mini}  
+\pcit le dossier \file{Library} de votre dossier personnel si vous êtes sous MacOS. 
+\begin{mini} 
+     Si vous utilisez une version francisée de MacOS alors ce dossier apparait sous le nom \file{Bibliothèque} votre \emph{dossier personnel} dans le Finder. Normalement il est caché donc vous devez suivre la procédure standard pour y accéder. 
+\end{mini} 
+\pcclose
+La suite dépend de votre système d'exploitation et de la distribution \LaTeX{} que vous utilisez. 
+\begin{description}
+\item[MacOS] il n'y a rien d'autre à faire; 
+\item[Linux] cela dépend de la distribution Linux. Les fichiers peuvent être directement accessibles sans rien faire d'autre mais parfois vous devez exécuter une ligne de commande  dans le Terminal:
+\begin{lstlisting}[language=bash]
+cd %pour être sur d'être dans votre dossier personnel
+mktexlsr texmf 
+\end{lstlisting}
+\medskip
+\item[MS Windows] si vous utilisez MikTeX ouvrez \og MikTeX Console\fg à partir du menu Démarrer et suivez la procédure décrite dans la dernière section nommée \sffamily{\og Your own TEXMF root directories\fg} sur la page web suivante (cliquez sur le lien):
+
+\url{https://miktex.org/kb/texmf-roots}. 
+
+Le dossier \file{texmf} que vous avez prédemment placé dans votre dossier personnel est compatible TDS, allez donc directement au point 5 et ajouter-le. 
+
+Si vous utilisez TexLive la procédure est la même que sous Linux. Ouvrez une console et exécutez la ligne de commande 
+\begin{lstlisting}[language=bash]
+mktexlsr texmf 
+\end{lstlisting}
+\end{description}
+
+Une fois cette procédure achevée vous pouvez compiler vos fichiers n'importe où sans vous souciez des fichiers style. Vous pouvez même ouvrir le présent manuel avec la ligne de commande usuelle 
+\begin{lstlisting}[language=bash]
+texdoc lvrtkit
+\end{lstlisting}
+
+\begin{mini}[Avertissement !]
+     Les fichiers style du projet ont besoin d'une version relativement récente de la distribution \LaTeX{} utilisée. Que ce soit MikTeX ou TeXLive, une distribution datant d'au moins 2019 est suffisante mais la dernière version disponible est toujours préférable. 
+     
+     \medskip
+     Les distributions Linux ont tendance à proposer par défaut de vielles versions de TeXLive. 
+     Pour savoir quelle version de \LaTeX{} vous avez, c'est simple. Exécutez |pdflatex| en ligne de commande et regardez les premières lignes de ce qui est affiché. Tappez ensuite les touches |ctrl+D| pour interrompre |pdflatex|. 
+     
+     \medskip
+     Le cas échéant, vous pouvez soit mettre à jour votre distribution Linux soit récupérer une version complète de TeXLive sur son site officiel et l'installer manuellement. Allez sur cette page par exemple pour télécharger l'image |.iso| de la version que vous voulez:
+
+     \medskip
+     \url{https://texlive.info/historic/systems/texlive/}
+
+     \medskip
+     La procédure d'installation est simple et elle est la même pour tous les systèmes d'exploitation. Toutefois la méthode pour l'intégrer ensuite dans le chemin de recherche des fichiers exécutables dépend de la version Linux que vous utilisez. Les ressources sur Internet qui montrent comment faire ne manquent pas.
+
+     \medskip
+     Pour MacOS, la meilleure option d'installation consiste en la distribution MacTeX. Elle inclut une version complète de TeXLive plus différents utilitaires (l'éditeur TeXShop par exemple). 
+     Plusieurs versions peuvent coéxister sur le sytème sans problème. La dernière installée devient la version par défaut. 
+\end{mini}
+
+\subsection{Fichiers style du projet} \label{sec:files}
+Outre les fichiers de base et les fichiers maîtres décrits dans la section suivante , le projet utilise les fichiers suivants: 
+\begin{description}[font=\sty, itemindent=-1em]
+\item [cpgelvrt.cls] fichier de classe du projet. C'est le seul fichier dont l'utilisation est visible sur un fichier maître. Le chargement des fichiers qui suivent dans cette description se fait à travers des options de celui-ci. Il contient toute la logique d'organisation des fichiers du projet. Il est capable de générer automatiquement les titres du livret, des parties et des chapitres ainsi que la production des couvertures en utilisant les options de la classe et  des commandes principales qu'il définit.
+\item [lvrtprint.sty] fichier style qui contient la géometrie de page ainsi que l'espacement des titres et le style entêtes/pieds de page pour les versions imprimables. Il est chargé par défaut; 
+\item [lvrtscreen.sty] la même chose pour les versions pour consultation sur écran. Il est chargé en lieu et place du fichier précédent si l'option de classe \opt{screen} est activée; 
+\item[lvrtcover.sty] fichier style dont la seule fonction est la production des couvertures. Son activation se fait par le biais de l'option |cover| de la classe  |cpgelvrt|. 
+\item[lvrtcommon.sty] fichier style qui contient les définitions des outils utilsables dans les fichiers de base (multicolonne, listes,...) ainsi que la description des styles des titres. C'est le fichier de classe |cpgelvrt.cls| qui s'occupe de son chargement;
+\item[lvrtbase.sty] nouveau fichier qui met en place, entre autre, l'interface de configuration clé/valeur et les mécanismes de modification des propriétés des compteurs.  
+\item[lvrtmath.sty] nouveau fichier qui définit des fonctionnalités avancées pour le traitement du texte mathématique; 
+\item [Logos] dossier contenant les logos au format \textsc{pdf}. Le logo du ministère est utilisé dans la page de garde de chaque document produit et dans les pages de couvertures générées avec l'option \opt{cover}.
+\end{description}
+
+En fait |cpgelvrt.cls|, une fois la partie logique initialisée, charge l'un des fichiers   \sty{lvrtprint.sty}, \sty{lvrtscreen.sty} ou \sty{lvrtcover.sty} selon les options fournies à la classe.
+
+\begin{mini}[Où mettre ces fichiers ?]
+La section précédente expose la procédure à suivre pour centraliser ces fichiers.
+\end{mini} 
+
+\bigskip
+{\color{cgorangetext}\bfseries
+Tous les autres fichiers cités ci-après n'ont plus d'utilité. Le choix des polices de caractères disponibles dans une distribution LaTeX est beaucoup plus riche de nos jours et un jeu de polices qui ne nécessite aucune installation supplémentaire est utilisé.}
+
+
+\begin{description}[font=\sty, itemindent=-1em]
+\item[Fonts.zip] archive \textsc{zip} contenant les fichiers de polices pour une utilisation avec \XeLaTeX{} ou \LuaLaTeX. Il faut désarchiver le fichier de telle fa\c con à obtenir un dossier |Fonts| contenant les fichiers de polices de caractères. Ce dossier doit obligatoirement rester dans la racine du dossier du projet (à coté des dossiers |Base| et |Masters|). Les fichiers de polices présents dans le dossier |Fonts| ne sont nécessaires que si l'option |fonts| du fichier de classe est activée et que le compilateur utilisé est \XeLaTeX{} ou \LuaLaTeX. Ce sont les polices de production finale des livrets.
+
+
+Pour diminuer le nombre de fichiers dont dépend le projet,  les fichiers suivants ne sont pas disponibles dans l'archive du projet. Ils sont générés automatiquement à la première compilation d'un fichier maître.
+
+\item[\st{gtdnames.def}] supprimé du projet.
+\item[gtdfont.sty] fichier style annexe. Il contient la partie relative au choix de polices de caractères et la définition de différentes macros utilisée pour régler  les styles de texte dans différentes partie du document. Son utilisation est facultative et ne se fait que lorsque l'option |fonts| de |cpgelvrt.cls| est activée.
+
+Les polices utilisées sont \police{Linux libertine}, \police{Linux Biolinum} et \police{PT Sans}. Elles sont normalement disponibles à travers les paquets \LaTeX{} \texttt{libertine}, \texttt{ptserif} et \texttt{ptsans}. En cas d'absence  de ces derniers dans votre système, installez les  en s'aidant du gestionnaire de “package” de votre distribution \LaTeX.
+
+\item[gtdxfont.sty] son rôle est le même que le fichier précédent, mais dans le cas où le compilateur \XeLaTeX{} (commande |xelatex|) ou \LuaLaTeX{} (commande |lualatex|)  est utilisé.  \XeLaTeX{} et \LuaLaTeX{} permettent d'utiliser toutes les polices \textsc{OpenType} installées dans le système d'exploitation. Pour pouvoir utiliser \texttt{gtdxfont.sty}, il faut désarchiver le fichier |Fonts.zip| et placer le dossier |Fonts| obtenu dans la racine du dossier du projet.
+\end{description}
+\begin{mini} 
+
+La création et l'utilisation des fichiers |gtdfont.sty| et |gtdxfonts.sty| ne se fait que si l'option \texttt{fonts} du fichier de classe est activée. Dans le cas contraire un choix de polices générique est effectué. 
+\end{mini}
+
+\subsection{Conventions de nomenclature des fichiers}\label{sec:orga}
+Pour son bon fonctionnement, le projet exige que les fichiers soient déposés dans des dossiers bien précis selon leur nature. 
+Les rédacteurs de programmes auront à traiter deux fichiers dans la phase de pré-production~:
+\begin{description}[font=\normalfont\color{cgbluetext}]
+\item [un fichier maître générique] qui se contentera d'inclure un fichier de base. L'inter\-ven\-tion sur ce fichier est réduite  à son minimum. Ces fichiers devraient être crées dans le dossier \file{Generic} à la racine du dossier du projet.  
+\item [un fichier de base]  qui doit contenir le texte du programme en lui même sans la commande \cmd{documentclass} et sans les usuels \cmd{begin}|{document}| et \cmd{end}|{document}|. Un fichier par matière/filière/niveau. Des commandes sont mises à leurs disposition pour leurs faciliter la tâche. Ces fichiers devraient être crées dans le dossier \file{Base} à la racine du projet. 
+\end{description}
+Chaque programme exige donc de travailler avec au moins  deux fichiers. La saisie du texte du programme se fait dans le fichier de base placé dans le dossier \file{Base} et la compilation se fait sur le fichier maître générique correspondant qui est lui placé dans le dossier \file{Generic}.
+
+Les noms des fichiers de bases doivent être formatés de la façon suivante
+
+\begin{center}
+     \newcommand{\f}[1]{\fbox{\strut\spotcolor\prm{#1}}}\ttfamily
+\begin{tabular}{c@{\,-\,}c@{\,-\,}c@{\,.\,}c}
+\f{code matière} & \f{code niveau} & \f{code classe} & \fbox{\strut\spotcolor tex}\\
+\end{tabular}
+\end{center}
+
+Ceux des fichiers maîtres génériques doivent simplement ajouter un préfixe constant à ceux des noms des fichiers de base correspondant sous la forme 
+
+\begin{center}
+     \newcommand{\f}[1]{\fbox{\strut\spotcolor\prm{#1}}}\ttfamily
+\begin{tabular}{c@{\,-\,}c@{\,-\,}c@{\,-\,}c@{\,.\,}c}
+\setlength\fboxsep{1pt}
+\fbox{\strut\spotcolor 00-prg} & \f{code matière} & \f{code niveau} & \f{code classe} & \fbox{\strut\spotcolor tex}\\
+\end{tabular}
+\end{center} 
+\begin{valuelist}
+     \newcommand{\f}[1]{\fbox{\strut\spotcolor\prm{#1}}}
+\item[\tt 00-prg] est un préfixe commun à tous les fichiers maîtres génériques. 
+
+\item[\f{code matière}]  code par matière en trois caractères: 
+
+{\ttfamily mat,  phy , chi , sci , inf ,  gee , gem , eed, egm, egh,  ara , fra , ang }
+
+\item[\f{code niveau}] est l'un des deux codes {\tt 1e} ou {\tt 2e}, pour première année et deuxième année; 
+
+\item[\f{code classe}] est un code en 5 caractères de la classe concernée:  
+
+\texttt{mpsi-, mp-\--\--, pcsi-, psi-\--, pc-\--\--, tsi-\--, ect-\--, ecs-\--}
+\end{valuelist}
+
+\subsubsection{Exemples}
+\adjustwidth{3em}{}
+de nom fichier maître générique~:
+	|00-prg-phy-1e-mpsi-.tex|
+	
+du nom du fichier de base associé~: |phy-1e-mpsi-.tex|
+\endadjustwidth
+Les fichiers maîtres de production sont à la charge de l'équipe de production. Leur utilisation est traitée dans la dernère section de  ce manuel.
+%
+%En plus des fichiers dont ils auront la charge, les rédacteurs disposeront d'un fichier d'extension (\texttt{gtd.sty}) propre au projet et qui en plus de s'occuper de tous les détails de la mise en forme, offre quelques commandes pour faciliter l'insertion des commentaires et des objectifs. 
+
+\subsection{Contenu des fichiers}
+Les fichiers de base ne devraient contenir aucune information active (visible sur le fichier compilé) autre que le texte du programme. Ils ne devrait pas contenir les instructions \cmd{documentclass}, \cmd{begin}|{document}| et \cmd{end}|{document}| mais aussi ne pas utiliser la commande \cmd{chapter} car le projet utilise celle-ci dans un but bien précis. Le codage de leurs noms servira à les identifier. Il faudra y utiliser les commandes mise à disposition par les fichiers styles du projet. 
+
+Les fichiers maîtres \emph{génériques} ne devront faire l'objet d'aucun ajout autre que l'instruction d'inclusion d'un fichier de base. Toute information supplémentaire sera irrémédiablement perdue dans le processus de production des livrets (les fichiers maîtres génériques ne sont là que pour faciliter le travail des rédacteurs). En exemple, voici ce que pourrait être le contenu du fichier maître |00-prg-chi-2e-mp---.tex|.
+
+\begin{latex}
+\documentclass{cpgelvrt}
+\begin{document}
+%%Informations pour la page de garde et le titre
+\setinfo{filiere=mp,niveau=2,matiere=chi}
+%% Insérer le titre
+\maketitle
+\includebase{chi-2e-mp---} % instruction d'inclusion du fichier de base
+\end{document}
+\end{latex}
+L'utilité des différentes commandes est facilement compréhensible à partir des lignes commentées du code. Mais précisons que c'est la commande \cmd{includebase} qui s'occupe d'inclure le fichier de base. On lui fournit en argument le nom du fichier à inclure sans aucune indication sur son emplacement car celui-ci est encodé en dur dans les fichiers styles. C'est pour cette raison qu'il est indispensable de respecter l'arborescence du projet.  
+
+% \subsubsection{Arborescence des fichiers}
+% Deux dossiers sont prévus pour contenir l'un les fichiers maitres l'autre les fichiers de base. Ils portent les noms respectifs |Masters| et |Base|. \texttt{Base} devrait contenir tous les fichiers de base du programme tout en respectant la nomenclature fixé par les instructions du projets. Le dossier Masters contiendra les fichiers maitres de production. Pour plus de convinvience on peut mettre les fichiers maitres generiques dans un dossier séparé à côté de \texttt{Masters}. Le dossier \texttt{Generic} est prévu pour cette tâche.
+
+% En ce qui concerne l'installation des fichiers styles, 
+% pour faire simple, il suffit déposer le fichiers \texttt{cpgelvrt.cls}, \texttt{lvrtcommon.sty} et \texttt{lvrtprint.sty} dans les dossiers |Masters| et |Generic|. Il est aussi possible de déposer ces fichiers en un lieu central qui sera accessible au compilateur. Consulter la documentation de votre distribution \LaTeX{} pour ces emplacements et sur la procédure à suivre. 
+
+
+% Un autre dossier est prévu pour recevoir les couvertures des livrets et qui est nommé |Covers|. Ce dossier doit résider aussi à la racine du dossier du projet, à coté des dossiers |Base| et |Masters|. 
+
+\subsection{Normalisation des fichiers de bases}
+Un fichier de base devrait se limiter au contenu (logique) du programme concerné sans aucun attribut de mise en forme. Un jeu de commandes est prévu par les fichiers styles pour faciliter la saisie et ne pas trop encombrer le code source afin de ne pas nuire à sa lisibilité. Les rédacteurs doivent se conformer autant que possible aux règles suivantes: 
+\begin{itemize}
+\item parcourrir \emph{complétement ce manuel au moins une fois} pour prendre connaissance des fonctionnalités qu'offrent les fichiers styles. Cela évitera la peine d'ajouter des fonctions ou des effets de style qui sont déjà aussurés par les fichiers du projet. Y revenir ou à sa version courte aussi fréquement que nécessaire. 
+\item depuis un bout de temps déjà, l'encodage des caractères par défaut sous \LaTeX{} est l'unicode (|utf8|). Les fichiers styles du projet activent celui-ci. Il n'est pas nécessaire d'utiliser des commandes spéciales pour les lettres accentuées, il suffit de les saisir telles quelles. Cela a en plus l'avantage de ne pas entraver le correcteur orthographique de l'éditeur de texte utilisé. 
+\item les utilisateurs doivent en général veiller à la qualité des codes sources. Ceux-ci doivent rester lisibles et rendre compte de l'organisation logique du contenu;
+
+\item les titres des parties d'un programme doivent être insérés en utilisant les commandes LaTeX pour les titres (\cmd{section}, \cmd{subsection},...)  (voir la section suivante pour plus de détails);
+
+\item utiliser les outils du projet pour la mise en forme des objectifs (voir la section suivante);
+
+\item le texte ne doit contenir aucune commande de changement de graisse ou de taille des polices (\cmd{textbf}, \cmd{bfseries}, \cmd{large}, \cmd{Large}, \ldots). Tout ce qui peut tenir pour un titre  doit utiliser les commandes de sectionnement \LaTeX{}. Pour mettre en valeur un passage de texte utiliser la commande LaTeX à conotation plus sémantique \cmd{emph}; 
+
+\item les listes doivent être écrites en utilisant les environnements \LaTeX{} à cet effet (\env{itemize}, \env{enumerate} et \env{description}) ou les outils spécifique au projet (\cmd{pcit}) et non pas de simples symboles d'énumération et des retours forcés à la ligne; 
+
+\item toute commande explicite produisant des espaces verticaux (\cmd{vspace}, \cmd{vskip}...) est à proscrire. Ces commandes peuvent s'avérer très nuisibles et le projet prévoit des solutions de remplacement moins brutales pour la plupart des situations;
+
+\item il faut éviter d'utiliser des commandes de rupture de page « brutales » comme \cmd{newpage} ou \cmd{eject}. Penser au fait que les mêmes fichiers sources servent à produire des documents de plusieurs formats. Des outils plus souples sont mis en place par les fichiers style;
+
+
+\item l'utilisation des tableaux LaTeX n'est pas désirable mais ils peuvent s'avérer nécessaires. Afin d'optimiser les espaces verticaux et les ruptures de page dans le produit final, les tableaux doivent soit être flottants s'il ne dépassent pas une page (en les encadrant dans un environnement \env{table}), soit utiliser l'environnement \env{tprogram} prévu par le projet. L'environnement \env{tprogram} est capable, contrairement à l'environnement standard \env{tabular}, de s'étendre sur plusieurs pages. 
+\end{itemize}
+
+\subsection{À propos de typographie}
+La typographie est universelle. Ses règles dépendent des traditions dans la langue utilisée et du support de destination. Certaines sont franches et incisives, d'autres sont plus permissives ou plus nuancées. Pour le projet il importe de suivre les règles suivantes~:
+\pcit ne pas utiliser le \underline{souligné} pour mettre en valeur du texte. C'est un héritage des machines à taper où il n'y avait pas d'autres moyens pour différencier typographiquement un texte.
+\pcit il n'y pas de convention fixe en ce qui concerne le \textbf{gras}. Pour le projet il est réservé aux titres, aux numéros des items dans les listes et en général pour souligner une hiérarchie dans le contenu.
+\pcit pour mettre en valeur un passage dans le texte utiliser de l'italique si le texte alentour est droit et inversement.
+\begin{mini}[\LaTeX]
+   C'est exactement ce que fait la commande \cmd{emph}.  
+\end{mini} 
+\pcit dans le document compilé, les symboles de ponctuation qui ne surmontent pas la ligne de base du texte (point, virgule et points de suspension) doivent être accolés au mot précédant et suivis d'\emph{une} espace. Ceux qui le font  (;:?!«») doivent être précédés est suivis d'une espace.
+
+\begin{mini}[\LaTeX{}]
+     L'extension \sty{babel} chargée avec l'option |french| par les fichiers style gère automatiquement les espaces autour d'une ponctuation. Elle rend les caractères de ponctuation actifs (ils agissent comme des commandes) donc pas besoin de les faire précéder d'un espace, mais l'espace suivant doit être présent. Lorsque c'est nécessaire l'espace typographique qu'ils insèrent avant est dite inseccable dans le sens qu'une rupture de ligne est rendue impossible à son niveau.
+     Traditionnellement on utilise aussi la commande \textasciitilde{} mais ce n'est pas nécessaire si on ne laisse pas d'espace entre la ponctuation et le mot précédent. 
+     
+     \medskip
+     Ces règles ne sont pas appliquées dans le mode mathématique donc il faudra ajouter les espaces nécessaires manuellement. En outre une formule centrée est traitée comme du texte normal, elle peut donc finir par une ponctuation selon sa position dans la phrase.  
+     
+     \medskip
+     Dans le texte normal, les points de suspension (...) s'insèrent avec simplement trois points successifs et non avec la commande \cmd{cdots} ou similaire car celles-ci sont destinées au mode mathématique qui a ses propres conventions typographiques. 
+\end{mini}
+\pcit Pour les différents types de tirets, y compris leur utilisation sous \LaTeX{}, consulter la page Wikipedia (cliquer sur le lien):
+
+\url{https://fr.wikipedia.org/wiki/Tiret}
+\pcit La typographie des tableaux est très exigente. Il n'est par exemple pas conseillé d'utiliser des filets verticaux pour séparer les colonnes et surtout pas des filets trops épais car ils attirent de façon inconsciente le regard au lieu de servir de guide visuel. Garder en tête que dans un tableau, c'est le texte qui constitue l'information principale et tout effet de style doit être fait dans le but de faciliter sa lecture.  
+
+\begin{mini}[\LaTeX{}]
+Le package \sty{booktabs} est chargé par défaut par les fichiers style du projet. Il propose une alternative aux filets par défaut \LaTeX{} et son manuel explique pourquoi certaines habitudes sont contraires à la typographie des tableaux. 
+
+Il stipule d'utiliser les commandes \cmd{toprule} et \cmd{bottomrule} pour les lignes d'ouverture et de ferméture du tableau et, sans en abuser, la commande \cmd{midrule} au milieu, voir \cmd{cmidrule} pour les lignes avec cellules fusionnées. Il déconseille avec insistance l'usage des filets verticaux. Tous les tableaux de ce manuel l'utilisent et respectent ces consignes.
+\end{mini}
+\pcclose
+
+\subsection{Rigide ou élastique}
+Les sauts entre les mots sur une ligne et ceux entre les lignes et les paragraphes sur une page ne sont pas de dimensions rigides. \TeX{} va les allonger ou les rétrecir selon le besoin pour concerver un bon équilibre des vides sur la page. C'est l'essence même de ce que fait \TeX{} et ce qui le distingue des autres solutions de traitement de texte. En fait \TeX{} prévoit deux méthodes pour créer des espaces, ceux qui sont rigides et ceux qui sont élastiques. Les documentations mal faites omettent de mentionner cet aspect ce qui mène à des habitudes incorrectes. Par ailleurs les commandes qui permettent de gérer les dimensions dans LaTeX (\cmd{newlength}, \cmd{setlenght}...) ne font (juste en apparence) pas de distinction entre les deux types ce qui amène encore plus de confusion.
+Par exemple, la plupart des documentations ne mentionnent pas assez clairement \emph{qu'il ne faut jamais} insérer manuellement des sauts verticaux rigides, sauf dans des cas très particuliers. Cela gène les algorithmes de rupture de page du moteur \TeX{} et peut rendre le travail de post-production intenable.
+
+Selon le jargon \TeX{}, une dimension rigide est de type |dimen| et une dimension élastique et de type |skip|. La première se présente sous forme d'un nombre flottant suivi d'une unité. La seconde sous forme d'un nombre flottant muni d'une unité avec optionnellement des valeurs |plus| et/ou |minus| sous la forme: 
+\begin{center}
+     \lstinline+ 6pt plus 1pt minus 0.5pt+
+\end{center}
+|plus| et |minus| sont des mots clés qui doivent être écrits explicitement tels quel. La première mesure est la valeur absolue du |skip|, les deux autres sont ses composantes d'élasticité. Un saut qui doit utiliser un |skip| va utiliser la valeur absolue de la dimension et au besoin ajouter au plus la valeur |plus| ou retrancher au plus la valeur |minus|. Les dimensions rigides sont utilisées pour des espaces qui doivent toujours être les mêmes, comme par exemple les marges de la page, la taille d'une boîte, l'épaisseur d'un filet, l'espace de séparation entre le texte et le cadre dans \cmd{fbox}... Les dimensions élastiques sont utilisés pour effectuer des sauts. C'est la clé qui garantit des lignes et des pages avec des espaces vides équilibrés. 
+
+\TeX{} permet de déclarer une nouvelle variable \texttt{dimen} avec la commande \cmd{newdimen}, et une nouvelle variable \texttt{skip} avec la commande \cmd{newskip}. La commande \LaTeX{} \cmd{newlength} crée en fait une variable de type \texttt{skip}. On peut contrôler la valeur d'une variable de dimension avec la primitive \cmd{showthe}. Si vous mettez quelque part une instruction de la forme \lstinline+\showthe\baselineskip+ ou \lstinline+\showthe\oddsidemargin+ la compilation \TeX{} s'arrète à ce niveau et montre les valeurs contenues dans ces variables. Ils suffit de taper sur la touche \og Enter\fg pour que la compilation continue. Si on utilise une dimension rigide là où \TeX{} attend un |skip|, il l'absorbera comme valeur absolue du saut sans s'en plaindre mais ne pourra pas augmenter ou diminuer le saut. Si on utilise une dimension élastique là ou \TeX{} attend une |dimen| il va simplement utiliser la valeur absolue de la dimension et écrire tout logiquement ce qui reste dans le document final.
+
+Ce n'est pas que \LaTeX{} est déficient de ce côté. Tout au contraire, son but ultime est de décharger l'utilisateur de ces détails techniques pour le laisser se concentrer sur l'organisation sémantique du contenu qu'il rédige. Par exemple, il a bien prévu des commandes pour effectuer des sauts verticaux correctement avec des dimensions plus ou moins grandes selon le besoin:  \cmd{smallskip}, \cmd{medskip} et \cmd{bigskip}. Ces commandes effectuent des sauts verticaux qui, comme on peut le deviner, se font avec des |skip|. Ces dimensions sont respectivement enregistrées  dans les variables \len{smallskipamount}, \len{medskipamount} et \len{bigskipamount}. On peut contrôler les valeurs qu'elles contiennent avec \cmd{showthe} et si besoin les altérer avec \cmd{setlength}. Mais, svp n'allez pas titiller des variables comme \len{baselineskip} au risque de complétement bousiller l'harmonie de votre document.
+
+Pour fermer cette parenthèse les \emph{sauts} horizontaux, et encore plus les \emph{sauts verticaux}, doivent être effectués avec des \texttt{skip}. Pour le projet, il n'est souvent pas nécessaire d'utiliser \emph{explicitement} des commandes de saut.
+
+\begin{mini}[Des mécansimes plus sûrs]
+Les fichiers style du projet mettent à disposition des mécanismes pour altérer les sauts verticaux de façon plus rapide et moins risquée. 
+\end{mini}
+\begin{mini}[Fin de paragraphe ou retour à la ligne]
+     Quand on laisse une ligne vide on informe \TeX{} que le paragraphe précédent est fini. C'est la même chose que d'insérer explicitement la commade \cmd{par}. Dans cette situation \TeX{} fait de ce point un très bon candidat pour une rupture de page. Bien plus qu'un point quelconque au milieu du paragraphe. 
+
+     La commande |\\| a une signification particulière dans certains environnemnts comme \env{tabular} ou \env{align}. On n'en parle pas ici. Donc quand la commande |\\|, ou son équivalent \cmd{newline} est utilisée en dehors de ces environnemnts elle force le passage à la ligne mais sans TERMINER LE PARAGRAPHE courrant. Elles découragent même encore plus une rupture de page à leur niveau. Utilisez maintenant systématiquement |\\| pour revenir à la ligne et \TeX{} sera obligé d'aller chercher des ruptures de page ailleurs. Cela peut aboutir à des anomalies plus ou moins sévères. 
+     
+     \medskip
+     On ne s'en rend pas compte sur de petits documents, mais avec des documents longs les ruptures de page peuvent devenir un vrai casse-tête surtout quand on utilise des éléments flottants, des tableaux, plusieurs colonnes... comme dans le projet. Autant éviter de gêner \TeX{} dans ce qu'il sait très bien faire par lui même. N'utilisez |\\| que lorsque vous avez besoin d'un alignement spécifique du texte sans rompre l'intégrité logique du paragraphe (comme pour les vers d'un poème). Autrement laissez une ligne vide.
+\end{mini}
+
+\begin{mini}[Penalty !]
+     Qui a parlé de pénalités ? C'est un autre aspect que les documentations évitent de discuter, à tord ou à raison. Y compris celle-ci.
+\end{mini}
+
+\begin{mini}[\cmd{baselineskip} et \cmd{parskip}]
+\cmd{baselineskip} est un |skip| qui sert comme saut entre deux lignes dans un même paragraphe. Il est calculé dynamiquement à chaque changement de taille de police avec les commandes \cmd{large},\cmd{Large}... ou doit être fourni explicitement avec la commande plus générale \cmd{fontsize}. À chaque changement de taille, il faut que la commande \cmd{par} soit à la portée de la commande qui provoque le changement, dans le même groupe \TeX{}. C'est ainsi qu'une instruction de la forme 
+\begin{latex}
+... du texte ... \\
+{\large Un text en plus grande taille} \\
+... encore du texte 
+\end{latex} 
+donne un interligne incorrect après le texte en \cmd{large}. Celui associé à la taille de police en dehors du bloc $\{\;\}$. La façon correcte de faire la même chose est plutôt 
+\begin{latex}
+... du texte ... 
+
+{\large Un text en plus grande taille \par} 
+... encore du texte 
+\end{latex} 
+\medskip 
+Le skip \cmd{parskip} est utilisé comme saut qui s'ajoute à \cmd{baselineskip} pour séparer deux paragraphes. Dans les réglages par défaut de \LaTeX{} il est nul car on préfère marquer les paragraphes avec une indentation au début. D'autres conventions optent plutôt pour une indentation nulle et un saut plus grand pour distinguer les paragraphes. La première convention convient à des textes avec des paragraphes longs. Elle donne un moins bon résultat pour les textes avec essentiellement des paragraphes courts. C'est le cas des livrets et c'est donc cette dernière convention qui est adoptée.     
+\end{mini}
+
+\subsection{Histoire de séparation}
+C'est quoi cette histoire de séparation entre sémantique et présentation dont on affuble \LaTeX{}. C'est un concept qui n'est en fait pas réservé à \LaTeX{}. Les logiciels de traitement de texte en sont aussi capables à condition de savoir comment procéder. Les pages web aussi.
+
+Au lieu par exemple de simuler des « titres » en mettant du texte en gras et en \cmd{large}, on peut créer une commande qui fait ce travail et l'utiliser pour mettre en forme nos «titres». Si plus tard on découvre que ce choix n'est plus judicieux on n'aura qu'à changer la signification de la commande pour que l'effet s'applique à tout le document. Autre aspect qui a un rapport avec cette situation: ce n'est pas une bonne idée de numéroter à la main ces titres. Cela impliquerait de devoir tout changer si on ajoute ou on supprime un titre. La bonne manière de le faire, c'est de faire en sorte que notre commande gère elle même la numérotation de façon dynamique.  C'est là l'idée de base dans cette séparation dont on parle.  
+
+Avec \LaTeX{}, la plupart des commandes et des environnements ont un sens sémantique. Ce sont les fichiers de classe et les fichiers de style qui les traduisent en des effets de style. Quand un auteur utilise la commande \cmd{section} il fait comprendre à \LaTeX{} qu'il veut un titre, non pas qu'il veut que le texte soit à une certaine taille. Cette décision revient au style utilisé.  Un document \LaTeX{} est donc une description de la structure logique du contenu et non de sa forme. 
+
+Pour préserver cette fameuse séparation il faut donc s'abstenir d'utiliser des commandes qui influent directement sur le style. Il faut soit utiliser les structures prédéfinies soit en écrire d'autres qui conviennent mieux à nos besoins.  
+
+ 
+
+\subsection{Plaidoyer pour les solutions de multicolonnage} 
+
+Le projet a besoin d'une fontionnalité bien précise:  permettre de saisir le texte du programme officiel sur une colonne et de manière synchronisée les commentaires sur une autre.
+
+Une solution pourrait être d'utiliser des tableux à deux colonnes. Toutefois cette piste apporte plus de problèmes qu'elle n'en résout. Pour ne lister que les plus gênants: 
+\begin{itemize}
+\item bien que des packages permettant d'étaler des tableux sur plusieurs pages existent depuis longtemps, il est impossible de faire éclater le contenu d'une cellule sur deux pages. Une cellule qui survient en fin de page doit alors être éclatée en plusieurs cellules, parfois en contradiction avec l'intégrité logique du texte, tout en risquant de tout devoir refaire en cas de changment du contenu.
+\item le code source est difficilement lisible dans un tableau à cause des instructions de formatage qui peuvent parfois être très lourdes pour obtenir certains effets (comme pour la fusion de cellule par exemple). Cela rend le maintien des fichiers sources et leurs évolution difficile. 
+\item la gestion des erreurs est très mauvaise sur les tableaux. En gros le compilateur renvoit à la ligne de fin du tableau. Ce qui risque d'être génant si on traite un tableau qui est sensé occuper plusieurs pages. On peut y remédier en découpant le contenu sur plusieurs tableaux de plus petite taille, mais cela ne résoud pas les autres problèmes. 
+\item La synchronisation source/\nom{pdf} ne fonctionne pas avec les packages pour grands tableaux. 
+\begin{mini}
+La synchronisation source/\nom{pdf} est une fonctionnalité indispensable. Elle rend possible d'aller directement au point correspondant dans le fichier source à partir d'une position dans le document \nom{pdf}. On peut dificillement  s'en passer   quand on veut apporter des modifications à un fichier PDF qui contient une centaine de page. 
+\end{mini}
+\end{itemize}
+
+Le package \texttt{paracol} pour contenu synchronisé en multicolonne  offre des environnements \LaTeX{} qui répondent exactement aux besoins du projet tout en n'ayant aucun de ces défauts. 
+Le projet offre une surcouche logique de ce dernier qui facilite grandement son utilisation. Pour résumer trois commandes permettent d'obtenir l'effet voulu. Ce qui a l'avantage de donner des fichiers sources très lisibles. 
+
+Les rédacteurs de contenu sont ainsi encouragés à se familiariser avec ces outils et à éviter autant que possible l'utilisation des tableaux.
+
+
+
+
+
+
+
+
+
+%\subsection{Le fichier de style \texttt{gtd.sty}}
+%\section{Les fichiers de base}
+\section{Traitement des fichiers de base}
+
+\subsection{Conventions de notation}
+Cette section est éminament technique. Toutes les commandes décrites répondent à des besoins réels qui n'ont pas tous été prévus dès l'élaboration du projet mais qui se sont dégagés, explicitement ou implicitement, des habitudes des différents intervenants en ce qui concerne la composition de texte avec le système \LaTeX{}. Elles ont été pensées pour offrir une bonne ergonomie, être facile à saisir, refléter le sens sémantique du texte qu'elle traitent tout en maintenant une bonne lisibilité du code source.
+
+Les commandes suivent des conventions communes respectant globalement les standards \LaTeX{} avec quelques innovations propre au projet. Les paramètres qu'elles utilisent sont de trois types: 
+\pcit les paramètres \emph{obligatoires}. Ils doivent être fournis entre $\{\;\}$. Une commande peut en avoir plusieurs ou aucun et ils sonts toujours, à quelques exceptions près, placés en dernier; 
+\pcit les paramètres \emph{optionnels} entre $[\;]$. Quand un tel paramètre est présent, en général c'est un texte qui va être repris tel quel quelque part dans le document final avec éventuellement certains effets, comme par exemple dans \cmd{item}\oprm{text} ou \cmd{section}\oprm{short title}\mprm{title}. Certaines commandes du projet peuvent en avoir plusieurs contrairement aux habitudes LaTeX (au plus un paramètre optionnel en général);
+\pcit les paramètres \emph{optionnels} entre $<\;>$. Ce sont tous des listes d'options de type \keyval séparés par des virgules qui servent à personnaliser le comportement de la commande. Quand un tel paramètre est disponible pour une commande, il est toujours unique et, à une exception près, il doit ètre placé en premier, immédiatement après le nom de la commande sans aucun espace. 
+\pcit L'effet du changement que les options entre $<\;>$ induisent est en général local et ne concerne que le texte à la portée de la commande. Toutefois il y a des options qu'on peut régler globalement pour tout le document. Il faudra alors les fournir à une commande de configuration spéciale (\cmd{lvrtsetup}) et non seulement en option à une commande donnée. On n'utilise plus pour cela les caractères $<\;>$ pour les encadrer mais $\{\;\}$. 
+\shutall
+
+La description d'une commande commence dans la marge et est formée du nom de la commande ainsi que de la spécification précise de tous les paramètres qu'elle gère. La nature de chaque paramètre est donnée explicitement entre les deux symboles $\langle\; \rangle$: 
+\begin{mini}Ne pas confondre  $<\;>$ et $\langle\;\rangle$.\end{mini}
+\pcit[\prm{text}] un texte normal qui va en général être repris tel quel dans le document; 
+\pcit[\prm{int}] un nombre entier positif; 
+\pcit[\prm{dim}] une dimension LaTeX rigide, une épaisseur ou dans certains cas des \og espaces\fg rigides (qui a dit sauts rigides); 
+\pcit[\prm{skip}] une dimension LaTeX élastique, en général un saut vertical;
+\pcit[\prm{num}] une valeur numérique flottante indiquant une proportion d'une dimension fixée en interne par les fichiers styles. Utilisé exclusivement pour les dimensions rigides. 
+\pcit[\prm{facskip}] très utilisé lorsqu'il s'agit de fixer la valeur d'un saut vertical. À l'utilisation il doit être soit un |skip| (sans oublier ses composantes d'élasticité) soit une valeur \prm{num} précédée du symbole |*|, auquel cas le saut est calculé comme étant \prm{num} multiplié par une valeur étalon qui est fixée en interne par les fichiers style. Comme dans les instructions   |\interskip{6pt plus 1pt minus 1pt}| ou bien |\interskip{*1.5}| par exemple;  
+\pcit[\prm{color}] le nom d'une couleur qui doit avoir été prédéfinie; 
+\pcit[\prm{keyval}]  une liste de couples de type \keyval qui servent en général à modifier le comportement d'une commande. 
+\pcit[\prm{char}] utilisé comme valeur dans certaines options \keyval. Il s'agit d'un caractère unique qui va déclencher un certain comportement de la commande; 
+\pcit[\prm{bool}] utilisé dans les options \keyval. C'est un commutateur logique. À l'utilisation on doit soit écrire simplement son nom sans la partie |=|\prm{val} auquel cas il devient vrai, soit écrire \prm{bool}|=false| auquel cas il devient faux. Comme par exemple |landscape| et |landscape=false| quand on utilise le package \sty{geometry}; 
+\pcit[\prm{code}] une instruction LaTeX qui sera utilisée dans le corps de la commande; 
+\pcit[\prm{cmdname}] certaines commandes du projet permetent de construire d'autres commandes pour un usage particulier comme le font par exemple \cmd{newcommand} elle même ou \cmd{newtheorem}. On dira que ce sont des méta-commandes. Ce type de paramètre doit commencer avec \textbackslash{} et indique le nom de la commande qui sera créée par ces constructeurs; 
+\pcit[\prm{csname}] un texte normal sans nombre et sans caractères spéciaux et qui ne commence pas avec \textbackslash{} qui sera utilisé dans la formation du nom d'une commande qui sera créée par une méta-commande. 
+\pcit[\prm{list}] une liste d'éléments qui sont de même nature séparés par des virgules. En général utilisé comme valeur dans certaines options sous la forme \kvopt{\prm{opt}}{\mprm{list}}. Il faudra alors veiller à l'encadrer entre accolade pour masquer la virgule à l'intérieur car celle-ci est aussi utilisée pour séparer les options principales.
+\pcit[\prm{$\ast$}] c'est le caractère optionnel bien connu $\ast$  qui sert en général à modifier le comportement d'une commande.
+
+\shutall  
+Quand il y a plusieurs paramètres de même nature dans une même expression il seront numérotés pour les distinguer. À chaque fois que c'est nécessaire une liste de descriptions des options \keyval est donné avec une indication de leurs valeurs par défaut si elles en ont qui apparait à droite sur la même ligne. Si l'option admet un racccourci (un nom plus court) alors celui-ci s'affiche à gauche de la description juste en bas de son intitulé. 
+
+\begin{mini}[Pourqoui \prm{num} et \prm{facskip}]
+     L'arithmétique selon \TeX{} est contaignante. Lorsqu'on multilplie un |skip| par un \prm{num} alors il est coercisé en une |dimen|. D'où l'introduction des paramètres \prm{facskip} qui en interne prennent le soin de préserver les composantes d'élasticité du |skip| en jeu.  
+\end{mini}
+\begin{mini}[Jargon]
+     Dans l'univers \LaTeX{} on parle parfois de version étoilée d'une commande \cmd{cmd} comme si \cmd{cmd*} était une commande à part entière alors qu'en fait dans cette écriture |*| ne fait pas partie du nom de la commande. La commande \cmd{cmd} teste simplement si elle est suivie du caratère |*| et modifie son comportement dans ce cas. C'est différent pour les environnements. Dans |\begin{align*}|, 
+          \iffalse\end{align*}\fi
+     par exemple, |*| fait bien partie du nom de l'environnement. 
+\end{mini}
+\begin{mini}[\LaTeX{} en marche]
+     Au moins une commande du projet utilise un autre caractère comme modificateur. Il s'agit de la \og commande\fg \cmd{pcit-}. Le principe est le même qu'avec $\ast$. Les nouvelles version de \LaTeX{} (depuis au moins 2019) permettent d'utiliser facilement n'importe quel \og token\fg comme modificateur alors que les anciennes versions n'offrait aucune méthode utilisateur officielle et utilisait en interne une technique manuelle fastidieuse et limitée au caractère $\ast$. Regarder la documentation du package \sty{xparse} ou  chercher le document \file{usrguide.pdf} dans le dossier d'installation de votre distribution (|texdoc| est votre ami). Les nouveautés ne se limitent pas aux dits modificateurs. Une vraie richesse a été ajoutée à la manière de définir de nouvelles commandes.
+\end{mini}
+
+\begin{mini}[Bookmarks \textsc{pdf}]
+Pour le présent manuel, chaque description de commande, d'environnement ou d'option insère un lien dans les bookmarks \nom{pdf} pour permettre de facilement de la retrouver.
+\end{mini}
+
+Signalons pour clore cette partie qu'il y a deux familles de commandes de configuration : celles qui commencent avec \cmd{lvrtset} et celles qui commencent avec \cmd{lvrtsetup}. Les secondes ne prennent qu'un seul argument obligatoire qui doit être une liste de \keyval. Les premières sont hautement spécialisées et utilisent chacune sa propre syntaxe selon le besoin sans recourrir à un système clé/valeur. 
+
+\subsection{Titres de sections et table des matières}
+\label{sec:divers}
+
+\subsubsection{Sections et table des matières générales}
+% \begin{ltxsyntax}
+% \cmditem{\spotcolor nom}{Nom propre}\lvvm
+%  Pour homogénéiser l'utilisation des noms propres dans les différents livrets, utiliser la commande \cmd{nom}, qui écrit sont argument en petites capitales.
+% \end{ltxsyntax}
+
+Les commandes LaTeX usuelles pour insérer des titres sont disponibles pour une utilsiation dans les fichiers de base à l'exception de la commande \cmd{chapter}. Il est fortement recommandé de les utiliser chaque fois qu'il y a besoin de mettre du texte en gras ou dans une taille plus grande (tout ce qui peut tenir pour un titre). Leurs utilisation doit respecter le découpage suivant: 
+\begin{ltxsyntax}
+     \cmditem{section}\prm{$\ast$}\oprm{text1}\mprm{text2}\lvvm
+     Commande LaTeX conventionnelle pour insérer le titre d'une section. Pour rappel, comme pour les autres commandes dans cette section:  
+     \pcit 
+          le caractère $\ast$ est utilisé en option pour signifier que le titre ne doitt pas être numéroté et qu'aucune entrée ne doit être ajoutée à la table des mattières. 
+     \pcit 
+          le paramètre optionnel \oprm{text} est utilisé quand le titre est trops long et qu'on désire qu'une alternative plus courte apparaise dans la table des matières tout en conservant le titre original \mprm{text} dans le texte.
+     \pcclose     
+     Pour le projet, Cette commande est utilisée pour les grandes parties du programme, theromodynamique par exemple pour la Physique. En  absence de $*$, cette commande produit un numéro et crée une entrée dans la table des matières; 
+
+     \cmditem{subsection}\prm{$\ast$}\oprm{text1}\mprm{text2}\lvvm
+     à utiliser pour les chapitres du programme. En absence de $*$, cette commande produit un numéro et crée une entrée dans la tables des matières; 
+     \cmditem{subsubsection}\prm{$\ast$}\oprm{text1}\mprm{text2}\shr
+     \cmditem{paragraph}\prm{$\ast$}\oprm{text1}\mprm{text2}\shr 
+     \cmditem{subparagraph}\prm{$\ast$}\oprm{text1}\mprm{text2}\lvvm 
+     à utiliser s'il y a besoin de plus de subdivisions logiques dans un chapitre du programme. Ses commandes sont reglées pour ne pas produire de numéros ni créer des entrées dans la table des matières.
+     
+     \cmditem{setcounter}\mbox{}{\ttfamily\{secenumdepth\}}\mprm{int}\lvvm
+     C'est l'instruction standard \LaTeX{} qui permet de régler la profondeur au delà de laquelle les numéros n'apparraissent plus avec les titres. Par défaut les fichiers styles lui donnent la valeur $3$, ce qui limite la numérotation à la commande \cmd{subsection}. Si un rédacteur tient vraiment à faire augmenter cette profondeur pour que, disons, \cmd{subsubsection} insère aussi un numéro, il suffit d'utiliser au début du fichier de base l'instruction 
+     
+     \lstinline+\setcounter{secnumdepth}{4}+
+\end{ltxsyntax}
+     \begin{mini}[Pourquoi pas \cmd{chapter}]
+          La commande \cmd{chapter} est utilisée en interne par les fichiers styles du projet. Elle est insérée automatiquement en début de chaque fichier de base quand on l'inclut dans le fichier maître \emph{avec la commande} \cmd{includebase}. Le titre affiché peut changer selon le type de livret à produire. Il est \og calculé\fg à partir des informations fournies dans le fichier maître.
+     \end{mini}
+     \begin{mini}[Table des matières] 
+          La table des matières est ainsi limitée aux noms des parties et ceux des chapitres des programmes. Si besoin, sans rien changer au contenu des fichiers de bases , il est possible d'y faire apparaitre des entrées pour plus de titres mais contrairement à la numérotation des titres cette tâche revient à l'équipe de production finale. Les réglages s'effectueront dans les fichiers maîtres et non dans les fichiers de base. 
+     \end{mini}
+
+     \subsubsection{La commande \cmd{subchapter}}
+     Dans certaines matières il y a besoin d'une subdivision supérieure à celle des grandes parties. Par exemple en physique et en chimie où il y a une partie \og Formations expérimentale\fg et une partie \og Contenu thématique \fg pour les cours théoriques ou dans d'autres matières où il y'a une « Première période », « Deuxième période »... Pour combler cette lacune, une unité de subdivision intemédiaire entre \cmd{chapter} et \cmd{section} a été ajoutée. Il s'agit de la commande \cmd{subchapter}.
+     \begin{ltxsyntax}
+          \cmditem{subchapter}*\oprm{text1}\mprm{text2}\lvvm
+          assure toutes les fonctionnalités attendues d'une commande de titrage (référence croisées, insertion dans la table des matières, utilisation dans les entêtes/pieds de page). Sa syntaxe est exactement la même que les autres commandes.
+     \end{ltxsyntax}
+      
+
+     \subsubsection{Titres des sessions de TP}
+     Un traitement spécial est accordé aux titres des sessions de TP. 
+     \begin{ltxsyntax}
+     \cmditem{{tpsection}}\sprm{int}\oprm{text1}\mprm{text2}\shr
+     \cmditem{{settpsection}}\shr
+     \cmditem{{unsettpsection}}\lvvm
+     La commande \cmd{tpsection} est propre au projet. Elle permet d'insérer le titre d'une unité de TP. Elle fonctionne comme les commandes de titrage normale \LaTeX{} à part qu'elle n'a pas de version étoilée et qu'elle possède un paramètre optionnel en plus entre $<\;>$. Elle utilise aussi sa propre numérotation et celle-ci n'est pas résiliée à chaque changment de \cmd{section}.
+     \pcit[\sprm{int}] 
+          l'entier \prm{int} est utilisé pour indiquer le nombre de séance que doit durer le TP. Si ce paramètre est utilisé, cette information apparaît dans le titre et dans la table des matières avec des formatages spécifique qui les met en valeur. Le texte \og\prm{int} séance(s)\fg est ajouté à gauche du titre et \og (\prm{int}s)\fg apparait avec le numéro de page dans la table des matières. 
+
+          Il est possible de changer localement pour un fichier de base le terme |séance| et son abréviation |s| avec la commande \cmd{seancename}. Par exemple: 
+          
+          \lstinline+\seancename{heure}{h}+
+
+          Une telle instruction devrait figurer au début du fichier de base pour qu'elle soit facilement accessible.
+     \pcit[\oprm{text}] et \mprm{text} 
+          ont les fonctions habituelles pour une commande de titrage.
+     \pcclose
+     
+
+     Si la commande \cmd{tpsection} est utilisé sans aucune précaution elle provoque une erreur comme quoi elle n'est pas définie. Elle a besoin de réglages spécifiques et il faut préparer d'abords le contexte. Pour le faire utiliser la commande \cmd{settpsection} juste avant de commencer à lister les titres des TP. Une fois ceci terminé il faudra tout remettre dans son état original avec la commande \cmd{unsettpsection}.
+
+     Un exemple (extrait d'un fichier de base pour le programme de chimie): 
+\begin{latex}
+\section{Solutions acqueuses}
+\settpsection
+     \tpsection{Initiation aux TP de chimie. Préparation de solutions aqueuses.}
+     \begin{itemize}
+          \item Sélectionner et utiliser le matériel adapté à la précision requise.
+          \item Distinguer les instruments de verrerie In et Ex.
+          \item Préparer une solution de concentration en masse ou en quantité de matière donnée à partir d'un solide, d'un liquide, d'une solution de composition connue avec le matériel approprié.
+     \end{itemize}
+     \tpsection[Dosages pH-métrique et conductimétrique acide fort/base forte]{Dosages pH-métrique et conductimétrique acide fort/base forte (choix d'un indicateur de fin de réaction).}
+     . . .   . . .
+\unsettpsection 
+\end{latex}
+     \begin{mini}
+          \cmd{tpsection} fait appel dans sa définition à la commande \cmd{subsection}. Ce qui permet de faire apparaître la liste des TP dans la table des matières. Le formatage spécifique du titre et de la table des matières est mis en place avec \cmd{settpsection} et il est annulé avec \cmd{unsettpsection}.
+     \end{mini}
+\end{ltxsyntax}
+
+\subsubsection{Styles des titres}
+On a vu comment configurer le niveau jusqu'auquel les titres affichent un numéro avec la méthode \LaTeX{} officielle. En outre, les fichiers styles mettent en ouvre un mécanisme propre au projet pour personnaliser ces numérotations et éventuellement le style global des titres. Ces mécanismes peuvent être utilisés dans un fichier de base à condition d'avoir une raison pertinente de le faire. Il va de soit que le style des titres doit rester homogène dans tout le livret.   
+
+Les deux commandes  \cmd{lvrtsetcounter} et \cmd{lvrtsetstyle} utilisent un mécanisme de mot clès pour changer rapidement le contenu de la numérotation (son style).  
+Un mot clé est un caractère unique qui doit être inséré entre deux barres verticales \verb+|+. C'est une représentation simple du style qui doit être utilisé pour un numéro selon le  \autoref{tabchar}.
+\begin{table}\centering
+\begin{tabularx}{.8\textwidth}{@{}lX>{\itshape}l@{}} 
+     \toprule
+     \titlestyle code & 
+     \TitlingFont\textcolor{cgbluetext}{style} & 
+     \titlestyle visuel 
+     \\ \midrule 
+     \verb+|1|+ & shiffres arabes & 1,2,3...  \\
+     \verb+|n|+ & shiffres arabes avec symbol \csuse{text@no} & 
+          \textnum 1, \textnum 2,\textnum 3... \\
+     \verb+|a|+ &  lettres en minuscule & a,b,c... \\ 
+     \verb+|A|+ & lettres en majuscule & A,B,C... \\
+     \verb+|i|+ & chifres romains en miniscule & i,ii,iii... \\
+     \verb+|I|+ & chifre romain en majuscule & I,II,III...  \\
+     \verb+|m|+ & numérotation ordinale au masculin & premier, deuxième... \\ 
+     \verb+|f|+ & numérotation ordinale au féminin & première, deuxième...\\
+     \verb+|S|+ & numéro de \cmd{section} en cours & \\
+     \verb+|s|+ & numéro de \cmd{subsection} en cours & 
+     \\ \bottomrule 
+\end{tabularx}
+\caption{Raccourcis utilisables dans les numérotations des titres} 
+\label{tabchar}
+\end{table}
+Le style par défaut pour \cmd{section} et \cmd{subsection} est par exemple obtenu avec les instructions 
+\begin{latex}
+\lvrtsetstyle{section}{|I|} % chiffre romains en majuscule 
+\lvrtsetstyle{subsection}{|S|.|1|} % numéro de section et chiffre arabe 
+\end{latex}
+
+On peut par exemple activer l'apparition des numéros dans \cmd{subsubsection} et changer le style de numérotation avec 
+\begin{latex}
+\setcounter{secnumdepth}{4}
+\lvrtsetstyle{subsubsection}{|s|.|a|} 
+\end{latex}
+Le numéro contiendra le numéro de la \cmd{subsection} en cours et le numéro de \cmd{subsubsection} en lettres minuscules. 
+La commande \cmd{lvrtsetstyle} a donc pour fonction de changer le style d'un numéro. La commande \cmd{lvrtsetcounter} est plus générale, elle permet de configurer plus de propriétés du compteur, y compris son style. Sa syntaxe est de la forme 
+
+
+\begin{ltxsyntax}
+     \cmditem{lvrtsetcounter}{nom}{style}[parent](char)\lvvm
+Change les propriétés du compteur \prm{nom}. Les paramètres utilisables sont:
+\pcit[\prm{nom}] paramètre obligatoire qui doit être le nom du compteur objet de la modification. Si ce compteur n'existe pas, il est crée. 
+\pcit[\prm{style}] paramètre obligatoire qui fixe le style qui lui sera appliqué selon les conventions décrites ci-dessus; 
+\pcit[\prm{parent}] est un paramètre optionnel qui peut être une liste de noms de compteurs existants optionnellement précédés d'un signe |-|. Sans le signe moins, le compteur objet de la modification sera remis à zéro chaque fois que le compteur de la liste change. C'est ce qui arrive par exemple pour |subsection| chaque fois qu'on utilise \cmd{section}. Avec le signe |-| c'est le contraire de l'opération qui se produit : le compteur à modifier devient indépendant du compteur de la liste. Si on veut par exemple que le compteur de |subsection| ne change plus avec \cmd{section}, mais continuer à dépendre de \cmd{chapter} il suffit de placer au début 
+\begin{latex}
+\lvrtsetcounter{subsection}{|1|}[-section,chapter]
+\end{latex}  
+\pcit[\prm{char}] c'est un paramètre optionnel (entre parenthèses). Il doit être un caractère unique qui sera ensuite utilisé comme raccourci pour la valeur en cour du compteur \prm{nom}, à la manière de \verb+|S|+ pour |section|. 
+\pcclose
+Le compteur |subsubsection| n'a par exemple pas de raccourci. Si on veut en créer un pour l'utiliser dans \cmd{paragraph} et faire afficher les numéros pour ceux si, il suffit donc de mettre en début du fichier de base 
+\begin{latex}
+\setcounter{secnumdepth}{5}
+\lvrtsetstyle{subsubsection}{|s|.|a|}(|k|)
+\lvrtsetstyle{paragraph}{|k|.|1|}
+\end{latex}
+Maintenant une situation invraissemblable juste pour illustration : si on veut que |paragraph| ne soit pas résilié à chaque \cmd{subsection} mais que la numérotation soit en continu pour tout le fichier de base tout en affichant le numéro courant de |subsection|, il suffit d'insérer les instructions 
+\begin{latex}
+\setcounter{secnumdepth}{5}
+\lvrtsetstyle{subsubsection}{|s|.|a|}(|k|)
+\lvrtsetcounter{paragraph}{|k|.|1|}[-subsubsection,-subsection,-section]
+\end{latex} 
+
+\cmditem{lvrtsetdeco}{nom}{code}\lvvm
+Sert à modifier la décoration avec laquelle sera affiché le compteur \prm{nom}. Le code \prm{code} doit être un code \LaTeX{} valide qui peut utiliser |#1| pour représenter la valeur courante du compteur avec son style exactement comme si on utilisait la commande \cmd{newcommand} pour définir la décoration. Un exemple d'utilisation pourrait être 
+\begin{latex}
+\lvrtsetdeco{subsubsection}{\llap{\bfseries #1.\enskip}}
+\end{latex}
+La commande \cmd{llap} sert à insérer le numéro sur la marge et \cmd{enskip} ajoute un petit espace qui est à peu près celui occupé par le caractère |n|.
+Le rôle de \cmd{lvrtsetdeco} est d'éviter de surcharger le style de numérotation avec des éléments décoratifs car c'est celui-ci qui apparaît lorsqqu'on fait une référence avec \cmd{ref} sur le titre.
+
+Les trois commandes \cmd{lvrtsetcounter}, \cmd{lvrtsetstyle} et \cmd{lvrtsetdeco} ne concernent pas seulement les styles des numérotations des titres. Elles sont utilisées pour changer ce style pour d'autres compteurs. Ceux utilisés par \env{enumerate} par exemple. 
+
+Les commandes suivantes par contre sont exclusivement dédiées aux commandes de titrage. 
+
+\cmditem{lvrtsetfont}{nom}{code}\lvvm
+Sert à imposer le style avec lequel sera affiché le titre associé au compteur \prm{nom}. \prm{code} doit être un code \LaTeX{} valide sans arguments qui sera placé avant le titre et son numéro. Peut être utilisé pour changer la taille ou la graisse du titre par exemple. 
+
+\cmditem{lvrtsetspacing}{nom}{dim}{skipb}{skipa}\lvvm 
+Sert à regler les espaces utilisés par le titre associé au compteur \prm{nom}. \prm{dim} est l'espace d'indentation du titre par rapport au texte normal. Il peut être négatif. Les dimesnions élastiques \prm{skipb} et \prm{skipa} sont utilisées comme sauts avant et après le titre. Au lieu de fournir la spécification complète (en tant que |skip|) de ces deux paramètres on peut utiliser des valeurs de la forme |*|\prm{num} où \prm{num} est un nombre qui sera utilisé comme facteur multiplicatif par une valeur étalon prédéfinie. Par exemple :
+\begin{latex}
+\lvrtsetspacing{subsubsection}{0pt}{*2}{*1} 
+\end{latex}
+pour une indentation nulle, un saut 2 fois plus grand que la normale avant et un saut normal après le titre. 
+\end{ltxsyntax}
+ 
+
+\begin{mini}[Et encore!]
+Voir la section \nameref{colannexe} pour la commande \cmd{customtitle} qui permet de créer des titres moins contraignants et qui s'intègrent mieux avec l'environnement multicolonne. 
+\end{mini}
+
+\subsubsection{Tables des matières partielles}
+Encore à finaliser...
+
+\subsection{Objectifs et ordre} Deux environnement sont prévus pour la mise en forme des objectifs:  \env{objectif} et sa version étoilée \env{objectif*}.
+\begin{ltxsyntax}
+\envitem{ojectif*}
+
+à utiliser avec des textes assez longs. Ceux d'introduction à la matière par exemple. Il ne produit pas de décoration autour du texte mais s'arrange pour que l'apparence soit bien différente du texte du programme.
+\envitem{objectif}\lvvm  à utiliser pour les textes courts. Ceux d'introduction à une partie du programme par exem\-ple. 
+\envitem{{ordre}}
+
+Dans le cas où le préambule contient une consigne sur l'ordre des chapitres à suivre, utiliser l'environnement de liste \env{ordre}. Il propose un format distingué pour accentuer l'importance de son contenu. C'est un environnement qui fonctionne comme \env{enumerate}, les unités pouvant être insérées avec \cmd{item}.
+\end{ltxsyntax}
+
+% \subsection{Utilisation avancée}
+% \subsubsection{Style des commentaires}
+% \begin{ltxsyntax}
+% \cmditem{\spotcolor commentsyle}{commandes}\lvvm
+% Il est possible d'appliquer un style au texte des commentaires pour le différencier du texte du programme lui même. La commande \cmd{commentstyle} s'en occupe. Il suffit de lui passer en valeur des commandes qui seront appliquées au texte. Par exemple le code
+% \begin{latex}
+% \commentstyle{\sffamily\fussy}
+% \end{latex}
+% permet d'imposer que les commentaires soient écrits en \textsf{sans sérif}. La commande \cmd{fussy} informe \TeX{} qu' il doit être plus rigoureux en ce qui concerne les ruptures de lignes.
+
+% Le code
+% \begin{latex}
+% \commentstyle{\setstretch{.95}\SetParskip{0pt plus 2pt minus 1pt}}
+% \end{latex}
+% modifie l'espace interligne et celle entre paragraphes. \cmd{setstretch} fait partie de l'extension |setspace|, ici on indique une réduction de l'interligne par un facteur de $0.95$. \cmd{SetParskip} de l'extension |nccparskip|, permet ici de fixer la valeur de l'espace \cmd{parskip};  espace qui est ajoutée à l'interligne en cas de début d'un nouveau paragraphe. La valeur donnée est une espace avec colle pour permettre à \TeX{} de réduire ou augmenter selon les valeurs indiquées les espaces inter-paragraphes sur une page donnée pour optimiser les ruptures de pages.
+
+% \medskip
+% \begin{mini}
+% Chaque bloc \env{bcomment} est encapsulé dans un groupe \LaTeX{}. Tout changement d'état (\cmd{color}|{...}|, \cmd{itshape}, \cmd{small}, ... ) effectué après une commande \cmd{bcomment} est annulé après une autre utilisation de \cmd{bprogram} ou \cmd{bcomment}. La même remarque est valable pour les blocs \env{bprogram}, mais aucune commande n'est prévu pour altérer le style de ces blocs de fa\c con globale. En principe les blocs \env{bprogram} adoptent le style par défaut du document.
+% \end{mini}
+% \end{ltxsyntax}
+
+\subsection{Programme et commentaires} \label{sec:comment}
+% \begin{table}%[thp]
+% %\renewcommand{\arraystretch}{1.5}
+% \begin{tprogram}{@{}X>{\small\sffamily}T{.33\linewidth}@{}}
+% \toprule
+% \bfseries Schémas  & 
+% \normalfont\normalsize\bfseries Situation \\
+% \midrule
+% \cmd{bprogram}\newline
+% \prm{texte programme 1}	\newline
+% \cmd{bcomment}\newline
+% \prm{texte commentaire 1}\newline
+% \cmd{bprogram}\newline
+% \prm{texte programme 2}	\newline
+% \cmd{bcomment}\newline
+% \prm{texte commentaire 2}\newline
+% {\centering $\cdots\cdots\cdots$}\newline
+% \cmd{eprogram}
+% &
+% succession normale de paragraphes disposant chacun d'un commentaire. \\ \midrule
+% \cmd{bprogram}\newline
+% \prm{texte programme 1}	\newline 
+% \cmd{bprogram}\newline
+% \prm{texte programme 2}	\newline
+% \cmd{bcomment}\newline
+% \prm{texte commentaire 2}\newline
+% \cmd{bcomment}\newline
+% \prm{texte commentaire 3}\newline
+% {\centering $\cdots\cdots\cdots$}\newline
+% \cmd{eprogram}
+% & un exemple de code où deux paragraphes et deux commentaires se succèdent. Le premier paragraphe n'a pas de commentaire. Le deuxième en a un. Le commentaire suivant n'est pas associé à un paragraphe. \\ \midrule
+% \cmd{bprogram}\newline
+% \prm{texte programme 1}	\newline
+% \cmd{bcomment}\newline
+% \prm{texte commentaire 1}\newline
+% \mbox{\cmd{bprogram}[\cmd{subsection}\mprm{Un titre}]}\newline
+% \prm{texte programe 2}	\newline
+% {\centering $\cdots\cdots\cdots$}\newline
+% \cmd{eprogram}
+% & Un exemple ou un titre de sous-section est inséré en mode unicolonne sans quitter l'environnement multicolonne.
+%  \\
+% \bottomrule
+% \end{tprogram}
+% \caption{Exemples de schémas d'utilisation des commandes \cmd{bprogram}, \cmd{bcomment}}
+% \label{tab:commandes}
+% \end{table}
+Pour les matières scientifiques, à part les textes d'introduction, des objectifs et diverses précisions, le contenu du programme est organisé en deux colonnes. La colonne de droite pour le contenu officiel du programme, synchronisée avec une colonne à gauche pour les commentaires. 
+
+\subsubsection{Les commandes principales}
+Trois commandes suffisent pour traiter le contenu en multicolonne:  \cmd{bprogram}, \cmd{bcomment} et \cmd{eprogram}. 
+   
+
+\begin{ltxsyntax}
+\cmditem{bprogram}\lvvm
+commande pour insérer  un paragraphe du programme (volet de gauche).
+Une commande \cmd{bprogram}  peut être suivie d'une autre commande \cmd{bprogram} si le paragraphe ne possède pas de commentaire. Cette commande se charge aussi d'ouvrir l'environnement multicolonne quand il ne l'est pas. 
+
+\cmditem{bcomment}\lvvm
+commande pour insérer un commentaire à droite d'un paragraphe \cmd{bprogram}. Le commentaire sera aligné verticalement avec le paragraphe du programme qui l'a précédé.
+Une commande \cmd{bcomment}  peut être suivie d'une autre commande \cmd{bcomment} si le  commentaire suivant n'est associé à aucun paragraphe du programme. Si l'environnement multicolonne n'a pas été ouvert (avec \cmd{bprogram}) alors \cmd{bcomment} s'en charge. 
+
+\cmd{bprogram} et \cmd{bcomment} ne prennent pas d'argument donc inutile d'encadrer le texte suivant entre accolades. Leurs effet se résume en fait au déplacement dans la colonne de destination et l'activation du style spécifique au texte de la colonne (police de caractère, alignement...). Le contenu est aussi isolé (dans un « groupe » \TeX{}) donc tout changement d'état (\cmd{bfseries}, \cmd{itshape}...) qui y survient est annulé au changement de colonne suivant. 
+
+% \begin{mini}[Très important !]
+% Un environnement multicolonne ne doitt \emph{en aucun cas} être initilisé au milieu d'un environnement de liste. Ceux standards, \env{itemize}, \env{enumerate} et \env{description}, mais aussi ceux du projet \env{ordre}, \env{objectif} et \env{objectif*}.
+% Par contre un bloc \env{bprogram} ou \env{bcomment} peut  contenir une liste.
+% \end{mini}
+
+
+\cmditem{eprogram}\lvvm
+Ferme l'environnement multicolonne. 
+
+
+
+
+%Le \autoref{tab:commandes} donne des exemples d'utilisations des commandes dans plusieurs situations.
+
+\begin{mini}[Pour résumer]
+     une fois l'environnement multicolonne initialisé avec le premier \cmd{bprogram} (ou le premier \cmd{bcomment}), on peut changer de côté avec les mêmes commandes autant que nécessaire. On ne ferme l'environnement multicolonne (avec \cmd{eprogram}) qu'une fois qu'on veut insérer de grands blocs de texte en pleine largeur. Une rupture de page peut survenir au milieu d'un même bloc programme/commentaire sans génér la synchronisation verticale des deux colonnes. La saisie est simple et le code reste très clair puisqu'un bloc peut contenir autant de texte qu'il faut sans avoir à l'encadrer entre des accolades (ni d'un environnement spécifique). Les erreurs pointent vers les endroits exacts où elles surviennent et la synchronisation \nom{pdf}/source reste fonctionnelle.  
+\end{mini}
+
+\begin{mini}[Avertissement]
+Un environnement multicolonne ne doit pas être ouvert au milieu d'une liste. Que ce soit les listes \LaTeX{} \env{itemize}, \env{enumerate},  \env{description} et plus généralement \env{list}, mais aussi celles propres au projet, \env{objectif}, \env{objectifs*}, et toutes les listes créées avec \cmd{pcit} ou \cmd{pcnum}\footnote{voir la section \ref{sec:listes}}. La conséquence serait un déséquilibre du texte sur les deux colonnes.  
+\end{mini}
+
+Normalement, il faut fermer l'environnement multicolonne pour insérer du texte en pleine largeur (les objectifs par exemple). Mais dans certaines situations c'est inutile de le faire. Un mécanisme est disponible pour insérer du contenu en pleine largeur sans quitter l'environnement bicolonne. Il suffit de le fournir en argument optionnel à la commande \cmd{bprogram}. Par exemple
+\begin{latex}
+\bprogram[\subsubsection{<un titre>}]
+     < ... paragraphe du programme ... >
+\end{latex}
+Le titre est insérée en pleine largeur et le texte qui suit la commande et son argument est inséré dans la colonne de gauche de façon normale. La seule limitation est que le texte passé em argument ne doit pas contenir lui-même les caractères $[\;]$, par exemple ceux encadrant une option d'une commande. Dans ce cas il faut encadrer tout l'argument entre deux accolades pour masquer les caractères $[\;]$ à l'intérieur.  
+
+Selon la même idée on peut ajouter par exemple un filet horizontal (pour mieux imiter un tableau) sur toute la largeur du texte avec la primitive TeX \cmd{hrule} avec quelque chose comme 
+\begin{latex}
+\bprogram[\vspace{6pt}\hrule\vspace{3pt}]
+\end{latex}
+\begin{mini} 
+     Cette instruction a des défauts. Une commande spéciale est prévue pour cette tâche.
+\end{mini}
+Maintenant comment altérer la largeur des deux colonnes ou en général régler différents aspects de l'environnement. La dernière version du projet prévoit un mécanisme clé/valeur pour le faire. C'est à la première commande \cmd{bprogram} qui initialise l'environnement multicolonne qu'incombe cette tâche. La commande \cmd{bcomment} permet aussi de le faire si c'est elle qui initialise l'environnement. La syntaxe complète des deux commandes est de la forme~: 
+\cmditem{{bprogram}}\sprm{keyval}\oprm{code}\shr
+\cmditem{{bcomment}}\sprm{keyval}\oprm{code}
+\pcit[\oprm{code}] est comme on l'a vu n'importe quelle instruction LaTeX qui sera exécutée sur la pleine largeur de la page.  
+\pcit [\sprm{keyval}] et une liste de couples \keyval fournie entre <> qui permet de régler certains aspects de l'environnement. \emph{Si cet argument est utilisé alors que l'environnement est déjà initialisé alors il est ignoré}. Les options utilisables sont comme il suit.
+\shutall
+\begin{optionlist}
+     \optitem[0.5]{{ratio}}{\prm{num}} 
+     \prm{num} un nombre flottant entre {\tt 0} et {\tt 1} qui précise le ratio  que doit occupper la colonne à gauche sur la largeur de la ligne courante. Celui de la colonne à droite s'en déduit automatiquement. La valeur par défaut est \texttt{0.5}.
+
+     \optitem[\{Programme\}\{Commentaires\}]{head}{\mprm{text1}\mprm{text2}}
+     active l'insertion d'un entête pour l'environnement à la manière d'un tableau. Les deux arguments (obligatoires) fixent le contenu à gauche et à droite de l'entête. Un filet de terminaison est aussi inséré à la cloture de l'environnement avec \cmd{eprogram}. Une utilisation systématique de cette option n'est pas recommandée. Elle est plus utile pour des cas particuliers en dehors du couple programme/commentaires.   
+
+     \optitem[20pt]{{sep width}}{\prm{dim}}
+     \prm{dim} est une dimension LaTeX qui précise l'espace de séparation entre les deux colonnes.
+
+     \optitem[0pt]{{seprule width}}{\prm{dim}} 
+     \prm{dim} est l'épaisseur du filet de séparation des deux colonnes. Par défaut il est nul.
+
+     \optitem[\textcolor{cgorangestroke}{\rule{1em}{1.5ex}}]{{seprule color}}{\prm{color}}
+     \prm{color} est le nom d'une couleur qui sera utilisée pour le filet de séparation des colonnes.
+
+     \optitem{seprule}{\mprm{dim}\mprm{color}}
+     pour fixer à la fois l'épaisseur et la couleur du filet de séparation. C'est la même chose que d'utiliser: 
+     \opt{seprule width}=\prm{dim}, \opt{seprule color}=\prm{color}
+     
+
+     \optitem{{before}}{\prm{code}}  
+     \prm{code} est un code \LaTeX{} arbitraire qui sera exécuté juste avant l'ouverture de l'environnement multicolonne. 
+
+     \optitem{{after}}{\prm{code}} 
+     \prm{code} est un code LaTeX arbitraire qui sera exécuté juste aprés la fermeture de l'environnement multicolonne.
+
+     \optitem[\len{medskipamount}]{{beforeskip}}{\prm{facskip}}
+     sera utilisée pour effectuer un saut vertical juste avant l'ouverture de l'environnement multicolonne. 
+     
+
+     \optitem[\len{outerparskip}]{interskip}{\prm{facskip}} permet de fixer le saut entre deux rangées de l'environnement. Par défaut c'est le saut de paragraphe en vigueur en dehors du mode mutlicolonne. 
+
+     \optitem[\len{medskipamount}]{{afterskip}}{\prm{facskip}}  
+     sera utilisée pour effectuer un saut vertical juste après la fermeture de l'environnement multicolonne. 
+
+     \optitem{{left style}}{\prm{code}} 
+     \prm{code} est un code LaTeX qui fixera le style utilisé dans la colonne du texte du programme.
+
+     \optitem{{rigth style}}{\prm{code}} 
+     \prm{code} est un code LaTeX qui fixera le style utilisé dans la colonne des commentaires.
+\end{optionlist}
+Par exemple pour fixer une largeur à droite plus petite et au même temps utiliser de l'italique pour les commentaires
+\begin{latex}
+\bprogram<ratio=0.6, right style=\itshape> 
+< ... texte programme ...>
+\bcomment 
+< ... texte commentaire ...>
+          ......
+\eprogram
+\end{latex}
+Comme signalé auparavant, ses options sont ignorées si l'environnement est déjà en cours. 
+
+Si on a déjà utilisé ces options et qu'on veut les réutiliser plutard pour un autre environnement, ce n'est pas la peine de les resaisir, il suffit de mettre simplemenent 
+\begin{latex}
+\bprogram<restore>
+\end{latex}
+pour les réactiver pour l'environnement en cours d'initialisation. L'option \opt{restore} restaure \emph{le dernier lot d'options utilisées}.
+
+\cmditem{lvrtsetuppc}\mprm{keyval}\lvvm
+Tout ce mécanisme a un effet local. Les options ne sont appliquées qu'à l'environnement en cours d'initialisation. Pour les fixer globalement, il faudra utiliser la commande \cmd{lvrtsetuppc} avec les mêmes options décrites ci-dessus en dehors de tout environnement \LaTeX. L'effet sera appliqué aux environnements qui seront ouverts après. Par exemple
+\begin{latex}
+\lvrtsetuppc{ratio=.6, right style=\itshape, beforeskip=\bigskipamount, afterskip=\bigskipamount}
+\end{latex} 
+fera que tout environnement bicolonne ouvert après l'occurence de cette instruction adoptera le style de l'exemple précédent plus l'ajout d'un saut vertical avant et après chaque environnement multicolonne. Saut qui sera le même que celui ajouté par la commande \cmd{bigskip}.
+
+Pour finir, il est possible au début du fichier de base de donner un nom à un lot d'options et ensuite de fournir ce nom comme option à la commande \cmd{bprogram} pour l'appliquer. 
+la syntaxe est de la forme:
+
+\cmditem{lvrtsetuppc}\{\texttt{save}\,=\,\mprm{nom}\mprm{keyval}\}\lvvm
+\prm{nom} sera utilisé comme « nom » des options \prm{keyval}. Pour utiliser ces options ensuite il suffit d'initialiser l'environnement avec \cmd{bprogram}\sprm{nom}. En exemple: 
+\begin{latex}
+\lvrtsetuppc{save={1tier}{ratio=.33}}
+\lvrtsetuppc{save={2tier}{ratio=.66}}
+\end{latex}
+créera deux options nommées |1tier| et |2tier| qui fixent repectivement la largeur de la colonne à gauche au tier et au 2 tiers de la largeur de la zone de texte moins l'espace de séparation des colonnes. Ces noms pourront ensuite être utilisés seuls ou avec d'autres options dans le paramètre $<\;>$ de \cmd{bprogram} comme dans
+\begin{latex}
+\bprogram<2tier, rigth style=\itshape>
+\end{latex}
+\begin{mini}
+\cmd{bprogram}\sprm{restore} utilise un mécanisme similaire. Chaque fois que le paramètre $<\;>$ est utilisé avec \cmd{bprogram}, les options sont enregistrées avec un nom interne et sont restaurées si l'option |<restore>| est uilisée. À chaque nouvelle utilisation de l'argument $<\;>$, ces options sont mises à jour (sauf bien sûr si on se limite à |<restore>|).
+\end{mini}
+\end{ltxsyntax}
+
+\subsubsection{Outils annexes}
+Une fois l'environnement bicolonne initialisé, on peut y utiliser les commandes décrites ci-après. 
+\begin{ltxsyntax}
+     \cmditem{interrule}\sprm{keyval}\lvvm insère un filet de séparation horizontal en pleine largeur et se déplace vers la première colonne. Les options utilisables sont : |b| =\prm{dim} \emph{espace} avant;  |a|=\prm{dim} \emph{espace} après; |h| =\prm{dim} épaisseur du filet; |c| =\prm{color} couleur du filet;
+     \cmditem{interskip}{facskip}\lvvm 
+     insère un saut verical en pleine largeur qui est calculé à partir de l'argument \prm{facskip}. 
+
+     Ces deux commandes produisent des erreurs si elles sont utilisées en dehors du mode multicolonne.
+
+     \cmditem{pcsec}\relax{\bfseries\;\cmd{pcsubsec}\;\cmd{pcsubsubsec}\;\cmd{pcpara}\;\cmd{pcsubpara}}\lvvm 
+     sont des versions des commandes de titrage \LaTeX{} qui insèrent les titres suggérés par leurs noms sur toute la largeur de la zone de texte alors qu'on est au milieu d'un environnement multicolonne sans avoir à le fermer. Si elles sont utilisées en dehors de l'environnement alors elles agissent comme les commandes normales. 
+\end{ltxsyntax}
+
+\subsubsection{Marquage des paragraphes du programme}
+Un mécanisme est prévu pour la numérotation des paragraphes des programmes. Cela pourrait s'avérer utile lorsque deux parties différentes veulent communiquer à propos d'un bout du programme.
+
+Deux stratégies sont adoptées: 
+\begin{ltxsyntax}
+\cmditem{markparacom}\shr
+\cmditem{unmarkparacom}\leavevmode\\
+la première est globale et permet de numéroter chaque paragraphe du programme inséré après une commande \cmd{bprogram}. Le compteur utilisé est réinitialisé à chaque utilisation de la commande \cmd{section}. Pour utiliser cette option il suffit de placer quelque part dans le fichier de base la commande \cmd{markparacom}. Le changement prend effet après la ligne où elle a été insérée. Pour annuler son action,  il suffit de placer la commande \cmd{unmarkparacom}.
+\cmditem{nbprogram}\lvvm
+l'autre permet un ajustement plus fin de la numérotation des paragraphes. Il suffit d'utiliser  \cmd{nbprogram} en lieu et place de \cmd{bprogram} pour placer un numéro à gauche du paragraphe qui suit la commande. De cette fa\c con on arrive à créer une division en des unités logiques du programme. Il n'est pas nécessaire avec cette méthode d'utiliser les commutateurs \cmd{markparacom} et \cmd{unmarkparacom}. 
+
+% \medskip
+% \begin{mini}
+% En cas d'utilisation simultanées des deux mécanismes, c'est \cmd{markparacom} qui prend le dessus.
+% \end{mini}
+\item[\cmd{renewcommand}\cmd{theparacom}\mprm{description}]\lvvm
+permet de redéfinir le style du numéro de paragraphe. En fait, il s'agit d'un compteur (|paracom|) et la commande présentée ici est celle usuelle pour le changement du style d'un compteur \LaTeX{}. Le style par défaut est fixé par~:
+\begin{latex}
+\renewcommand\theparacom{%
+	\footnotesize(\arabic{section}.\arabic{paracom})}
+\end{latex}
+
+\begin{mini}
+Il est possible de désactiver le marquage des paragraphes sur un fichier quelque soit la méthode utilisée pour l'activer. Il suffit de placer dans le fichier maître qui l'appelle la commande \cmd{disablemarks}. La commande \cmd{reenablemarks} permet de réactiver le marquage si ce dernier a été désactivé par \cmd{disablemarks}.
+\end{mini}
+ 
+\end{ltxsyntax}
+
+Exemple de rendu avec la commande \cmd{nbprogram}: 
+\nbprogram
+Qu'arrive-t-il si on insère une note de bas de page\footnote{commande \cmd{footnote}} ou un objet flottant  au milieu d'un environnement multicolonne~?
+\bcomment
+%Les footnotes et les objets flottants sont gérées par colonnes: 
+ Les \emph{footnotes} d'une colonne ne sont plus  insérées en bas de la même colonne. Les objets flottants sont gérés de fa\c con plus complexe.
+\nbprogram
+Qu'arrive-t-il si on insère une note de bas de page ou un objet flottant \footnote{avec les environnements \env{figure} ou \env{table}} au milieu d'un environnement multicolonne~?
+\bcomment
+Les \emph{footnotes} sont gérées par colonnes:  les footnotes\footnote{et les objets flottants aussi} d'une colonne seront insérées de façon normale en bas de page. 
+\eprogram 
+
+\subsection{Des titres moins contraignants} \label{colannexe}
+Regardons maintenant comment insérer des titres plus résilients dans le sens où ils sont indépendants de l'arhitecture globale des titres sous \LaTeX{} et se comportent convenablement en mode multicolonne en ce qui concerne les sauts  qui les encadrent. On a parfois besoin d'insérer un intitulé, au milieu d'un tableau ou du mode multicolonne, sans que cela ne déclenche toute la machinerie sous-jascente des titres \LaTeX{}
+mais sans consessions au niveau typographique et stylistique. Un titre ne s'improvise pas en plaçant un numéro et du texte en gras ou en plus grande taille. Le minimum est de répondre aux exigences suivantes:
+\pcit les \emph{sauts} implicites avant et après le titre doivent respecter les conventions;
+\pcit  de préférence l'intitulé doit être indenté par rapport à un éventuel numéro;
+\pcit les numéros \emph{doivent} être générés dynamiquement pour ne pas avoir à tout refaire en cas d'ajout ou de supression d'une unité;
+\pcit un titre doit bien se comporter s'il se trouve à proximité de la fin de page pour ne pas avoir à forcer une rupture de page pour éviter un intitulé orphelin.  
+\pcclose
+
+Le projet dispose désormais d'une commande qui répond, au moins aussi bien que les commandes \LaTeX{}, à ces exigences et qui permet de créer de nouveaux styles de titres sans toutefois aller jusqu'à l'intégration complète dans les mécanismes \LaTeX{} (pas de gestion de la table des matières par exemple). Elle est par contre assez polyvalente dans le sens où :
+\pcit elle détecte si elle est utilisée dans un environnement multicolonne et adopte un comportement plus adéquat;
+\pcit  elle prépare le contexte pour une éventuelle utilisation des références croisées, y compris sur l'intitiulé lui même (avec la commande usuelle \cmd{nameref});
+\pcit on peut facilement créer une hiérarchie entre titres qui est indépendante de celle des titres standards.
+\pcclose
+
+\begin{ltxsyntax}
+     \cmditem{customtitle}*[text]{text}\lvvm
+     S'il est présent, l'argument dans \oprm{text} est utlisé comme numéro, sinon un compteur interne est utilisé pour la numérotation. L'argument dans \mprm{text} sert comme texte du titre. Avec le modificateur |*| le titre est inséré dans la colonne courante, sans lui il l'est sur la pleine largeur de la page. Une commande \cmd{label} insérée après le titre crée correctement une ancre qui peut être référencée ailleurs avec \cmd{ref} ou avec \cmd{nameref}. On notera en particulier que la signification des paramètres est très différente de celle des commandes de titrage usuelles (qui sont hors-propos ici, puisque la gestion de la table des matières n'est pas disponible). Un numéro est toujours produit sauf si on utilise un argument optionnel vide $[]$.
+     
+     Il est en outre possible d'utiliser un compteur personnalisé, éventuellement créé pour l'occasion: 
+\begin{latex}
+\lvrtsetcounter{theme}{|1|} % au début du fichier de base
+\customtitle<c=theme>{Le titre}     
+\end{latex} 
+Le compteur |theme| est incrémenté et ensuite inséré comme numéro. Ceci peut être utile pour créer des commandes de titrage au comportement correct à moindre effort. Il suffit par exemple de mettre au début du fichier de base 
+\begin{latex}
+\lvrtsetcounter{theme}{|1|}[section]
+\newcommand\Theme{\customtitle<c=theme>} % c pour counter
+\end{latex}
+pour disposer ensuite de la commande \cmd{Theme} qui agit presque comme \cmd{customtitle} mais avec son propre compteur. Dans l'exemple précédent celui-ci est résilié à chaque utilisation de  \cmd{section}.
+
+Il est aussi possible de régler, par exemple, la taille à laquelle le numéro et le titre s'affichent: 
+\begin{latex}
+\lvrtsetcounter{theme}{|1|}[section]
+\newcommand\Theme{\customtitle<c=theme, s=\large>} % s pour style
+\end{latex}
+
+La commande ainsi créée ne gère toutefois plus le paramètre $<>$ qui sert à altérer localement son comportement. Pour créer un clone de \cmd{custumtitle} associé à un compteur et des options prédéfinis, il faut utiliser la méta-commande \cmd{newsimplifiedtitle} :
+
+\begin{latex}
+\newsimplifiedtitle\Theme{s=\large, bs=*1.5, as=*1.5} 
+% bs pour before skip
+% as pour after skip
+\end{latex}
+Plus besoin de spécifier un compteur car un compteur interne est automatiquement créé pour la commande. Les options données en deuxième argument fixent le comportement par défaut de la commande mais peuvent ensuite être écrasées avec le paramètre $<\;>$ comme pour \cmd{customtitle}. Les options utilisées ici précisent  les sauts avant et après le titre. Elles sont exprimées en fonctions de sauts étalons définis par les fichiers style. 
+En outre le nom interne du compteur créé est |cTheme|. Ses propriétés peuvent donc être reglées avec les commandes \cmd{lvrsetcounter} ou \cmd{lvrtsetstyle}, voir \cmd{lvrtsetdeco}. 
+
+La syntaxe générale de cette méta-commande est de la forme :
+
+\cmditem{newsimplifiedtitle}\prm{cmdname}\mprm{keyval}\lvvm
+Crée une commande de nom \prm{cmdname} (qui doit commencer avec |\|) qui se comporte comme \cmd{customtitle} à la difféence qu'elle adopte par défaut les options fournies dans \prm{keyval}. Un compteur est automatiquement créé et associé à la commande. Son nom est celui du nom de la commande sans |\| et précédé du caractère |c|. Les propriétés de ce compteur peuvent ensuite être ajustées avec \cmd{lvrtsetcounter} et consoeurs. 
+
+
+Les options utlistables sont avec \cmd{customtitle} et \cmd{newsimplifiedtitle} sont :
+\begin{optionlist}
+\optitem{use counter}{\prm{text}}[\rac{c}]
+\prm{text} est le nom d'un compteur qui doit avoir été créé auparavant avec la commande \cmd{lvrtsetcounter}. La commande standard \cmd{newcounter} n'est pas suffisante car les compteurs qu'elle crée ne gèrent pas les mot-clés. Le compteur est uitilisé juste pour le titre en cours. Il n'est pas associé définitivement à la commande, à moins de définir une nouvelle commande comme dans 
+
+\lstinline+\newcommand\Theme{\customtitle<c=theme>}+
+
+Cette option n'a pas d'intérêt dans \cmd{newsimplifiedtitle} car un compteur est construit à partir du nom de la commande fourni en premier argument.
+
+\optitem[0pt]{title style}{\prm{code}}[\rac{s}]
+\prm{code} est un code \LaTeX{} qui est incrusté juste avant le texte titre et  son numéro. Son effet est limité au titre. Il permet, entre autre, de fixer la taille  à utiliser. 
+
+\optitem{title indent}{\prm{dim}}[\rac{i}]
+dimension qui est utilisée pour indenter le titre par rapport au texte normal. Elle peut être négative. 
+
+\optitem[0.5em]{labelsep}{\prm{dim}}[\rac{ls}] espace de séparation entre l'intitulé et le numéro. 
+
+\breakifnospace
+\optitem[1]{beforeskip}{\prm{facskip}}[\rac{bs}]
+sera utilisée dans le calcul du saut vertical avant le titre par rapport à une valeur étalon. Sa valeur par défaut est |1| en dehors du mode multicolonne. Dans celui-ci ce saut et annulé et le titre se contente du saut entre rangée. 
+\optitem[1]{afterskip}{\prm{facskip}}[\rac{as}]
+sera utilisée dans le calcul du saut vertical après le titre par rapport à une valeur étalon. 
+\optitem[3]{break factor}{\prm{facskip}}[\rac{bf}]
+Soit une dimension explicite soit un facteur qui sera multiplié par le saut de ligne. S'il reste moins d'espace dans la page que la dimension ainsi créée alors une rupture de page est declenchée avant le titre. Sert à éviter les titres orphelins en fin de page. Normalement un effort est fait pour que cela ne se produise pas en des circonstances normales. Mais parfois \TeX{} se trouve à court d'options, comme dans le cas où deux titres se suivent ou que le titre est suivi d'un élément trop haut comme un tableau par exemple.  Voir la section sur les ruptures de page pour plus de détails. 
+\optitem[true]{runin}{\prm{bool}}[\rac{r}]
+variable booleénne. Si elle est activée alors le titre sera inséré en mode |runin|, c'est à dire que le texte suivant est placé en continuité du titre sur la même ligne. C'est par exemple le comportement par défaut de la commande \cmd{paragraph} dans \LaTeX{}.
+\end{optionlist}
+\end{ltxsyntax}
+
+Un exemple complet maintenant:  dans certaines matières, on a besoin d'une subdivision bien précise à utiliser dans l'environnement bicolonne. Il y a des thèmes et chacun est décomposé en plusieurs unités. On insère donc au début du fichier de base de la matière le code suivant  
+\begin{latex}
+\newsimplifiedtitle\theme{s=\large} 
+\newsimplifiedtitle\unite{afterskip=2/3}
+\lvrtsetcounter{ctheme}{|I|}[section](T)
+\lvrtsetdeco{ctheme}{Thème #1.}
+\lvrtsetcounter{cunite}{|T|.|1|}[theme]
+\end{latex} 
+Ce qui crée les commandes \cmd{theme} et \cmd{unite}. Le compteur |ctheme| qui s'affiche avec le style \og\textbf{Thème I.}, \textbf{Thème II.}...\fg est remis à zéro après chaque \cmd{section}. Un raccourci est crée pour |ctheme| et il est utilisé dans le style de |cunite|. Celui-ci s'affiche donc avec le style \og\textbf{I.1.}, \textbf{I.2.}...\fg et il est automatiquement remis à zéro après chaque commande \cmd{theme}.
+Une hiérrachie peut ainsi être mise en place entre les titres.
+
+\subsection{Des listes plus expressives} \label{sec:listes}
+
+ 
+Un environnement de liste (\env{itemize}, \env{enumerate}, ...) insère un espace vertical supplémentaire à son début et à sa fin. Ceci posait problème dans les versions précédentes quand un tel environnement commence le texte sur une colonne. La liste ne commençait plus à la même hauteur que le texte qui lui est associé dans l'autre colonne. Ce problème à été reglé dans la version courante. En outre de nouvelles structures ont été ajoutées pour faciliter l'insertion de listes avec une paramètrisation plus poussée que ce que offre LaTeX par défaut et une organisation plus explicite au niveau du code \LaTeX{}. Elles sont utilisables dans le mode multicolonne comme dans le mode normal et elles changent de comportement selon le contexte. Dans un environnement multicolonne elles annulent les espaces verticaux et utilisent des espaces horizontaux plus compacts tout en continuant à respecter les conventions typographiques des listes. 
+
+\begin{mini}[Listes... ou munitions]
+     Les listes sont le nerf de la guère de la composition de texte en classes préparatoires. Pas un seul document ne s'en prive. \LaTeX{} manque d'une interface de personnalisation simple de leurs propriétés (indentation, style de numérotation...). Des packages existent pour le faire. L'un des plus notables est \sty{enumitem}. Il est utilisé en interne par le projet tout en ajoutant une couche d'abstraction qui simplifie l'accès à ses fonctionnalités. En outre un nouveau paradigme dans l'utilisation des listes est disponible non seulement pour les fichiers du projet mais \emph{dans tout fichier \LaTeX{} qui utilise l'instruction} |\usepackage{lvrtcommon}|. 
+\end{mini}
+
+\subsubsection{Tutoriel}
+Il s'avère que les listes à puce (\env{itemize}) sont utilisées dans les fichiers de base bien plus fréquement que les listes numérotées. Commençons donc par elles. 
+\begin{ltxsyntax}
+     \cmditem{pcit}\shr 
+     \cmditem{pcclose}\lvvm
+     La commande \cmd{pcit} fonctionne comme  \cmd{item} avec des différences notables: 
+     \pcit on n'a pas besoin d'ouvrir un environnement particulier pour l'utiliser. Quand elle est lancée pour la première fois, elle ouvre elle même un environnement \env{itemize}  et insère un item; 
+     \pcit une fois l'environnement ouvert, elle se comporte comme la commande \cmd{item} normale. On peut d'ailleurs utiliser \cmd{item} à la place.
+     \pcit pour fermer l'environnement \env{itemize} initialisé par le premier \cmd{pcit}, utiliser la commande \cmd{pcclose}. Si toute la séquence se produit dans un environnement multicolonne, il n'est pas nécessaire d'utiliser \cmd{pcclose}.
+     \shutall  
+\end{ltxsyntax}
+
+Un exemple rapide pourrait être 
+\begin{latex}[lot=.45]
+\pcit Un premier item;
+\pcit un deuxième;
+\pcit et un dernier.
+\pcclose
+\end{latex}
+
+Maintenant comment peut-on imbriquer deux listes : \cmd{pcit} possède un paramètre $<\;>$ dès qu'elle en trouve un, même vide, elle ouvre une nouvelle liste \env{itemize}. Pour retourner à la liste de niveau supérieure il suffit d'utiliser l'instruction \cmd{pcit}|-|. Celle-ci ferme le niveau en cours et selon s'il y a encore un niveau ouvert ou pas elle insère un item ou ne fait rien. Dans ce sens, l'instruction \cmd{pcit}|-| permet aussi de fermer la liste si elle est placée dans le niveau le plus extérieur.
+\begin{latex}[lot=.42]
+\pcit premier item dans le niveau 1;
+\pcit deuxième item dans le niveau 1;
+     \pcit<>   premier item dans le niveau 2;
+     \pcit     second item dans le niveau 2.
+\pcit- dernier item dans toute la liste.
+\pcclose
+\end{latex}
+Sur cet exemple, remplacer \cmd{pcclose} par \cmd{pcit}|-| aura le même effet. Maintenant, on aimerait utiliser d'autres puces que celle reglées par défaut. C'est le paramètre optionnel $<\;>$ qui permet de le faire :
+\begin{latex}[lot=.42]
+\pcit<b> premier item dans le niveau 1;
+\pcit deuxième item dans le niveau 1;
+     \pcit<t>   premier item dans le niveau 2;
+     \pcit     second item dans le niveau 2.
+\pcit- dernier item dans toute la liste.
+\pcclose
+\end{latex}
+Les options qui permettent de changer de puces sont résumées dans le tableau suivant:
+\begin{center}
+     \begin{tabular}{cccccc}
+          e & s & d & b & t & c \\
+          \lvrtendash & \lvrtsquare & \lvrtdiamond & \lvrtbullet & \lvrttriangle & \lvrtcheckmark \\
+          \cmd{eit}/\cmd{eclose} & 
+          \cmd{sit}/\cmd{sclose} & 
+          \cmd{dit}/\cmd{dclose} & 
+          \cmd{bit}/\cmd{bclose} & 
+          \cmd{tit}/\cmd{tclose} & 
+          \cmd{cit}/\cmd{cclose} \\
+          endash & square & diamond & bullet & triangle & checkmark
+     \end{tabular}
+\end{center}
+La dernière ligne est fournie à titre indicatif pour aider à mémoriser les initiales qui servent comme options.
+Au lieu d'utiliser une option pour changer de puce et augmenter le niveau on peut aussi utiliser les commandes de la troisièmes ligne du tableau précédent. Elles fonctionnent de la même façon que \cmd{pcit}/\cmd{pcclose} à l'exception que chaucune utilise la puce indiquée par la première lettre de son nom et provoque une erreur si on tente de changer celle-ci avec une option. À l'usage, pour imbriquer deux listes de cette famille il est inutile d'utiliser les paramètres optionnels $<\;>$  ou |-|  non plus. Un simple changement de nom de commande suffit pour ouvrir ou fermer un niveau. 
+\begin{latex}[lot=.45]
+\eit premier item dans le niveau 1;
+\eit deuxième item dans le niveau 1;
+     \bit   premier item dans le niveau 2;
+     \bit   second item dans le niveau 2.
+\eit dernier item dans toute la liste.
+\eit-
+\end{latex}
+Le dernier \cmd{eit}|-| ferme le niveau supérieur de la même façon que si on utilise \cmd{eclose} à la place. Constater que pour créer un nouveau niveau et pour en sortir, aucune indication n'a été fournie aux commandes dans cette construction. On peut même aller plus loin dans les niveaux : 
+\begin{latex}[lot=.45]
+\cit premier item dans le niveau 1;
+\cit deuxième item dans le niveau 1;
+     \bit   premier item dans le niveau 2;
+     \bit   second item dans le niveau 2.
+          \tit un niveau en plus.
+\cit dernier item dans toute la liste.
+\cit-
+\end{latex}
+Cette fois, l'avant dernière commande \cmd{cit} ne s'est pas contenté de fermer le niveau en cours. elle est revenue au niveau auquel elle a été lancée la première fois.
+
+La saisie en devient beaucoup plus légère et la hiérarchie des items est naturelle et transparente sur le texte \LaTeX. Une solution qui est bien meilleure que de simplement utiliser les raccourcis très populaires 
+\begin{latex}
+\newcommand\bi{\begin{itemize}}
+\newcommand\ei{\end{itemmize}}
+\end{latex}
+
+\begingroup
+\setlist*[itemize]{noitemsep, labelindent=1.5em, labelsep=.5em}
+Le fonctionnement global est simple à comprendre mais dans le détail l'algorithme utilisé par ces commandes est le suivant :
+\sit si la commande est suivi d'une option \sprm{keyval} alors elle ouvre une nouvelle liste et insère un item; si c'est une commande spécialisée qui est utilisée pour la première fois elle ouvre un niveau et n'utilise \sprm{keyval} que pour les options; si un éventuel caractère |-| est présent après \sprm{keyval}, il est ignoré (il n'a pas de sens ici);
+\sit sinon:
+     \dit elle vérifie le niveau auquel elle est exécuté et revient le cas échéant au niveau auquel elle a été lancée; ensuite :
+          \bit si elle est suivie d'un caractère - alors elle recule encore d'un niveau et selon s'il y a encore un niveau ouvert ou pas, place un nouvel item ou ne fait rien. 
+          \bit sinon elle insère simplement un item comme le ferait la commande \cmd{item}.
+\shutall
+\endgroup
+
+Par ailleurs, toutes les commandes de ferméture sont des synônyme d'une même commande qui porte le nom \cmd{closelist}. Les noms spécifiques ne sont là que pour appuyer la sémantique du code source. Une commande plus puissante est disponible aussi pour cette tâche : \cmd{shutall} ferme récursivement tous les niveaux déjà ouverts et elle est inoffensive si aucun ne l'est. Cette commande est automatiquement lancée par chaque commande \cmd{bprogram} ou \cmd{bcomment}. Il est donc inutile de fermer une liste dans l'environnement multicolonne si \emph{elle termine le contenu d'une cellule}.  
+
+Un autre exemple, cette fois dans un environnement bicolonne qui est lui même personnalisé: 
+ 
+\begin{latex}[lat]
+\bprogram<
+     ratio=.66, 
+     sep width=18pt, 
+     head={Colonne large}{Colonne serrée},
+     right style=\sffamily\itshape, 
+     seprule
+>
+Texte de programme dans le volet à gauche, parallèle à un commentaire qui commence par une liste mais avec un alignment vertical correct. 
+\bcomment 
+\pcit<b> item 1;
+     \pcit<t>  sous-item 1;
+     \pcit     sous-item 2. Pas besoin de fermer les listes, même sur plusieurs niveaux.
+\eprogram 
+\end{latex} 
+
+Le parmètre \sprm{keyval} ne se limite pas à la modification de la puce. On peut y utiliser toutes les options du package \sty{enumitem}. Les curieux se confieront à sa documentation officielle (|texdoc enumitem|) pour en savoir plus. Cela permet de régler très finement les propriétès des listes, y compris pour des utilisations originales comme dans l'exemple suivant:
+\begin{latex}[lat]
+\pcit<labelindent=2cm>[] \small\sffamily
+Un paragraphe très indenté par rapport au texte normal. Le paramètre vide $[\;]$ sert ici à faire disparaître la puce de la liste. Il a le même sens qu'avec la commande \cmd{item} normale sauf qu'ici l'espace de séparation entre la puce et le texte suivant est absorbé.\par 
+L'effet de l'indentation dure même pour plusieurs paragraphes; tant que l'environnement n'a pas été fermé. Les listes \LaTeX{} sont parfois effectivement utilisées de cette manière. C'est ce que font certains environnemnt pour théorèmes par exemple.  
+\pcclose 
+\end{latex}
+
+\subsubsection{La syntaxe}
+La syntaxe complète de la commande \cmd{pcit} et des commandes de la famille \cmd{bit} est  de la forme : 
+\begin{ltxsyntax} 
+     \cmditem{pcit}\sprm{keyval}\prm{-}\oprm{text}\shr
+     \cmditem{bit}\sprm{keyval}\prm{-}\oprm{text}\lvvm
+     le paramètre optionnel \oprm{text} agit comme avec le \cmd{item} normal: la puce usuelle de la liste est remplacée par \prm{text} pour l'item courant. \sprm{keyval} est une liste d'options, soit propres au projet comme pour les puces soit des options du package \env{enumitem}. Le modificateur |-| est utilisé pour fermer le niveau courrant ou bien toute la liste si le niveau en cours est le niveau le plus extérieur. Il est absorbé et ignoré si le paramètre \sprm{keyval} est présent.   
+
+     De plus, avec les commandes de la famille \cmd{bit}, le paramètre \sprm{keyval} n'est utilisé que pour passer d'autre options que celle du choix de la puce. Sa présence, même vide, provoque en outre l'ouverture d'un nouveau niveau de liste. Le modificateur |-| n'est pas non plus nécessaire pour fermer le niveau en cours puisque chacune de ces commandes revient à son niveau d'origine en l'absence de \sprm{keyval}. Dans les deux situations, utiliser une commande au nom différent permet d'augmenter le niveau ou au contraire d'en fermer selon l'algorithme décrit ci-dessus. La commande de base \cmd{pcit} se comporte aussi de la même façon si elle est mélangée avec les autres commandes.  
+
+\cmditem{newsimplifieditemize}\mprm{csname}\mprm{keyval}\oprm{char}\lvvm
+cela crée les commandes \cmd{\prm{csname}it}/\cmd{\prm{csname}close} au même comportement que \cmd{pcit}/\cmd{pcclose} ou bien \cmd{bit}/\cmd{bclose}. \mprm{keyval} est utilisé pour fixer le comportement par défaut de la commande. Ce comportement peut être ensuite changé localement avec le paramètre \sprm{keyval} de la commande ainsi créée. Sans le paramètre optionnel \oprm{char}, une commande au comportement similaire à \cmd{pcit} est créée : on peut changer localement de puce. S'il est présent, il fige la puce qui sera utilisée par la liste et donc crée une commande similaire à \cmd{bit}. 
+
+Mais alors quel intérêt ? Puisqu'on dispose de la commande générique \cmd{pcit} et des commandes spécialisées qui épuisent toutes les puces prédéfinies.   L'intêret peut résider dans la définition de nouvelles commandes qui créeent des listes avec des propriétés différentes grâce à \sty{enumitem}. La commande générique \cmd{pcit} est par exemple elle même définie par 
+
+\lstinline+\newsimplifieditemize{pc}{s}+
+
+La seule option déclarée ici est \opt{s} qui fixe la puce par défaut de la commande. L'absence du paramètre \oprm{char} lui permet de changer optionnellement de puce. Ajouter d'autres options avec \opt{s} aurait permis par exemple d'avoir une indentation plus propononcée ou des sauts entre items plus réduits. 
+
+On peut aussi définir de nouvelle puces et les associer à des commandes spécialisées. À titre d'indication, le code complet pour créer \cmd{bit} est le suivant 
+\begin{latex}
+\def\lvrtbullet{$\bullet$}
+\lvrtlistloadingit{b/.style={puce=\lvrtbullet}}
+\SetEnumitemKey{b}{before=\lvrt@enumitemerr{b}}
+\newsimplifieditemize{b}{}[b]
+\end{latex}
+La première ligne crée la puce. La deuxième déclare l'option qui sera associée à la puce. La troisième utilsie le système de gestion de clés du package \env{enumitem} pour provoquer une erreur si une commande spécialisée utilise l'option \opt{b} et la dernière définit les commandes \cmd{bit} et \cmd{bclose}.  
+
+On peut aussi, de façon plus simple, créer de nouvelles commandes au comportement modifiés à partir des commandes existentes en utilisant le nouvau mécanisme de définition de commandes de \LaTeX{}. Comme par exemple 
+\begin{latex}
+\NewDocumentCommand\bibit{d<> o}{%
+     \IfValueTF{#1}{\pcit<#1>}{\pcit} 
+     \IfValueT{#2}{\texttitle{\itshape #2}}%
+}
+\let\bibclose\closelist
+\end{latex}
+Ce qui crée la commande \cmd{bibitem} qui se comporte à peu près comme \cmd{pcit} :
+\pcit si un paramètre $<\;>$ est présent, il est relayé à la commande \cmd{pcit} sous-jacente;
+\pcit le paramètre optionnel \oprm{ } est lui intercepté pour insèrer son contenu avec le style utilisé pour les titres et en italique. La puce est par contre toujours produite.
+\pcit la commande \cmd{bibclose} permet de fermer la liste. 
+\pcclose
+\cmd{bibit} imite de ce fait le style utilisé pour formater une bibliographie. Le paramètre optionnel \oprm{ } devrait être le titre de l'ouvrage. Pas d'association possible avec la commande \cmd{cite} par contre. C'est simplicite mais peut être suffisant. 
+
+\end{ltxsyntax}
+
+
+\subsubsection{Les listes numérotées} 
+On reprend les mêmes idées que pour les listes à puce et on les adpate  pour produire de numéros. De base il y a le couple \cmd{pcnum}/\cmd{pclose} (sic!) 
+\begin{latex}[lot=.45]
+\pcnum l'item 1 du premier niveau;
+\pcnum l'item 2 du premier niveau;
+     \pcnum<> l'item 1 du deuxième niveau; 
+     \pcnum   l'item 2 du deuxième niveau.
+\pcnum- retour au premier niveau et on ferme.
+\pcclose
+\end{latex}
+On peut toutefois préférer d'autres styles que celui reglé par défaut pour les trois niveaux possibles. On y arrive avec les options |1|, |a|, |A|, |i|, |I| qui ont la même signification que les mots clès qu'on a déjà utilisé dans les styles de compteurs. 
+\begin{latex}[lot=.45]
+\pcnum<a> l'item 1 du premier niveau;
+\pcnum l'item 2 du premier niveau;
+     \pcnum<i> l'item 1 du deuxième niveau; 
+     \pcnum    l'item 2 du deuxième niveau.
+\pcnum- retour au premier niveau et on ferme.
+\pcclose
+\end{latex}
+\def\paircmd#1{\tabular{ll}\cmd{#1num} \\[-.5ex]\cmd{#1close}\endtabular}
+ De la même façons que les listes à puces, on dispose de l'association entre style et commandes spécialisées selon le tableaux suivant 
+ \begin{center}
+     \begin{tabular}{@{}cccccc@{}}
+          |1| & |a| & |A| & |i| & |I| & |q| \\
+          1, 2, 3... & a, b, c... & A, B, C... & i, ii, iii... & I, II, II... & Q1, Q2, Q3... \\
+          \paircmd{a} & 
+          \paircmd{l} & 
+          \paircmd{L} & 
+          \paircmd{r} & 
+          \paircmd{R} & 
+          \paircmd{q} \\
+          arabic & letter & Letter & roman & Roman & question
+     \end{tabular}
+\end{center}
+
+Preuve d'une certaine efficacité, on peut mélanger allègrement entre les deux types de listes avec la même syntaxe
+\begin{latex}[lot=.53]
+\qnum l'item 1 du niveau 1;
+\qnum l'item 2 du niveau 1;
+     \lnum l'item 1 du niveau 2; 
+     \lnum l'item 2 du niveau 2.
+          \bit Un item à puce; 
+          \bit et un autre. 
+\qnum le dernier item qui retrouve sa place sans lui indiquer le chemin.
+\shutall % silence, tout le monde !
+\end{latex}
+
+\begin{latex}[lat]
+\bprogram 
+\qnum Un item 
+\qnum Un autre 
+\bcomment 
+\qnum<r> La liste reprend
+\qnum fin.
+\eprogarm     
+\end{latex}
+
+
+
+
+
+
+
+
+
+
+\def\enques#1{Question #1.}
+\lvrtsetuplist{question/.style={n={|1|}{}}}
+%\renewsimplifiedenumerate{q}{question}
+
+
+
+\subsection{L'environnement multicolonne pour simuler des tableaux}
+Ce n'était pas prévu dès le début du projet, mais vu sa souplesse, l'environnement multicolonne peut être utilisé pour mettre en forme des tableaux simples, mais qui peuvent être arbitrairement longs. Il aura fallu passer outre deux limitations de la première implémentation de cet environnement:  gérer plus que 2 colonnes et avoir la possibilité  d'ajouter un entête qui indique la nature du contenu de chaque colonne. C'est fait. De nouveaux outils ont été ajouté pour couvrir ce besoin. En outre un système de configuration de type clé/valeur a été ajouté, le package \sty{paracol} n'en disposant pas.   
+
+\begin{mini}[Experimental !]
+     C'est une couche d'abstraction qui repose sur les fonctionnalités du package \sty{paracol}. Ces outils sont encore au stade expérimental et certaines choses que peuvent faire les outils pour tableaux ne pourront jamais être imitées avec le nouvel environnement (comme la fusion de cellules par exemple). 
+     Pour plus de précaution, l'implémentation de ce nouvel environnement a été écrite à part. À terme \cmd{bprogram} et \cmd{bcomment} en seront de simples applications. 
+\end{mini}
+\begin{mini}[Entête pour le programme/commentaires]
+     Certains outils ajoutés ont été aussi implémentés pour l'ancien environnement bicolonne comme l'insertion d'un entête ou les filets de séparations horizontaux. Mais pour le programme et ses commentaires insérer à répétition le même entête chaque fois qu'on entre en mode bicolonne n'aporterait aucun information utile au lecteur. On peut simplement expliquer au début du livret le principe des deux colonnes. Ils faudra donc réserver cette fonctionnalité aux cas où on a besoin d'un entête particulier.
+\end{mini}  
+
+\subsubsection{Tutoriel}
+Pour une utilisation de base, deux commandes suffisent pour mettre en forme un \og tabeau\fg:  \cmd{bcolumn} et \cmd{ecolumn}. La commande \cmd{bcolumn} initialise l'environnement et permet ensuite de s'y déplacer horizontalement et verticalement. La commande \cmd{ecolumn} le ferme. 
+
+La première commande \cmd{bcolumn} qui initialise l'environnement exige un premier argument obligatoire qui indique le nombre de colonnes à créer. Les occurences suivantes n'en ont aucun usage tant qu'on ne ferme pas l'environnement. Un exemple simpliste  pourrait être de la forme
+\begin{latex}[lat]
+\bcolumn{3}       cellule 1 de la rangée 1 ...    % initialisation
+     \bcolumn     cellule 2 de la rangée 1 ...
+     \bcolumn     cellule 3 de la rangée 1 ...
+     \bcolumn     cellule 1 de la rangée 2 ...
+     \bcolumn     cellule 2 de la rangée 2 ...
+     \bcolumn     cellule 3 de la rangée 2 ...
+     \bcolumn     cellule 1 de la rangée 3 ...
+\ecolumn                                          % fermeture  
+\end{latex} 
+Sans paramètre et sans aucune indication du mouvement à suivre, \cmd{bcolumn} se déplace de colonne en colonne sur une même rangée jusqu'à la dernière colonne et initialise ensuite d'elle même une autre rangée.  
+Cet arrangement montre ses limites à la lecture. Difficile en effet de détecter visuellement quel contenu va dans quelle cellule au niveau des sources. Pour y remédier, dans le procéssus d'initialisation, d'autres commandes aux noms plus explicites sont créées. Dans notre exemple, les commandes  \cmd{cone}, \cmd{ctwo} et \cmd{cthree} permettent respectivement de se placer dans la première, la deuxième ou la troisième colonne. Pour créer une nuovelle rangée et se placer directement dans la colonne concernée il suffit d'ajouter un modificateur |*| à l'une de ces commandes. Par exemple \cmd{ctwo*} crée une nouvelle rangée et se déplace vers la deuxième colonne.
+
+L'exemple précédent pourrait ainsi être traité avec le code  
+\begin{latex}
+\bcolumn{3}       cellule 1 de la rangée 1 ...
+     \ctwo        cellule 2 de la rangée 1 ...
+     \cthree      cellule 3 de la rangée 1 ...
+     \cone*       cellule 1 de la rangée 2 ...
+     \ctwo        cellule 2 de la rangée 2 ...
+     \cthree      cellule 3 de la rangée 2 ...
+     \cone*       cellule 1 de la rangée 3 ...
+\ecolumn
+\end{latex} 
+Cela améliore la lecture au niveau des sources. La première commande \cmd{bcolumn} reste obligatoire car les commandes \cmd{cone}, \cmd{ctwo}... restent inconnues tant que l'environnement n'as pas été initialisé. Il n'est pas nécessaire de respecter l'ordre de ces commandes sur une même rangée. Le contenu apparaîtra toujours à la bonne position. Le code suivant produit encore la même chose
+\begin{latex}
+\bcolumn{3}       cellule 1 de la rangée 1 ...
+     \cthree      cellule 3 de la rangée 1 ...
+     \ctwo        cellule 2 de la rangée 1 ...
+     \ctwo*       cellule 2 de la rangée 2 ...
+     \cthree      cellule 3 de la rangée 2 ...
+     \cone        cellule 1 de la rangée 2 ...
+     \cone*       cellule 1 de la rangée 3 ...
+\ecolumn
+\end{latex} 
+Cette fois c'est la commande \cmd{ctwo*} qui crée la deuxième rangée et on n'a pas respecté l'ordre d'entrée des cellules sur les rangées 1 et 2. Une fois une rangée créée par une commande étoilée, on peut multiplier l'appel des commandes non étoilées dans n'importe quel ordre, possiblement plusieurs fois, sans declencher la création d'une nouvelle rangée. Si une même commande est utilisée plusieurs fois sur une rangée alors le nouveau contenu est simplement ajouté comme nouveau paragraphe (au sens \TeX{}) au contenu précécedent sur la même colonne. Si l'une des commandes est omise sur une rangée alors le contenu de la cellule correspondante reste vide. 
+
+Pour aller plus loin dans la personnalisation des commandes de déplacement, on peut leurs donner des noms plus évocateurs du contenu des colonnes. Tout doit se faire dans les options d'initialisation de l'environnement avec pour l'exemple une instruction de la forme 
+\begin{latex}
+\bcolumn{3}<col names={1=prog, 2=com, 3=per}>
+\end{latex}
+Avec celle-ci on obtient les commandes de déplacement 
+\cmd{bprog}, \cmd{bcom} et \cmd{bper} qui sont les exactes synonymes de \cmd{cone}, \cmd{ctwo} et \cmd{cthree}. La lettre $b$ est ajoutée au début du nom de chaque commande pour minimiser le risque de conflit avec les noms des commandes \LaTeX{} existantes (et pour respecter les traditions du projet). Rien n'oblige à fournir tous les noms comme dans cet exemple, les commandes de la famille \cmd{cone} étant toujours disponibles.
+
+\begin{mini}[Ce qu'on y gagne]
+     Par rapport à un tableau classique on obtient visuellement une meilleure organisation logique du code source, les ruptures de pages peuvent se produire naturellement y compris au milieu d'une rangée sans perdre l'alignement vertical, les erreurs pointeront exactement là où il faut et la synchronisation source/\nom{pdf} reste opérationnelle. 
+\end{mini}
+
+\begin{mini}[Convention des options]
+D'autres options ont des noms qui commencent avec |col|. Elles prennent toutes une liste d'options comme valeur avec une syntaxe de la forme \{1=\prm{opt1},2=\prm{opt2},...\}. Chaque nombre représente le numéro de la colonne concernée par l'option. Il n'est pas obligatoire de fournir une option pour chaque colonne. En l'absence du numéro d'une colonne une option par défaut est adoptée.
+\end{mini}
+
+\begin{mini}[\cmd{bprogram} et \cmd{bcomment}]
+L'implémentation des commandes originales \cmd{bprogram} et \cmd{bcomment} est légérement différente. \cmd{bprogram} crée toujours une nouvelle rangée alors que \cmd{bcomment} ne le fait que si c'est elle qui doit intitier l'environnement bicolonne. Aucune des deux commandes n'a une version étoilée. Elles n'en ont pas besoin.
+\end{mini}
+
+
+
+
+Regardons maintenant comment spécifier les largeurs des colonnes: 
+\begin{latex}
+\bcolumn{4}<ratio={.25,.50}>
+\end{latex}
+Comme pour \cmd{bprogram} c'est l'option |ratio| qui permet de le faire mais cette fois on doit lui passer entre accolades une liste de proportions qui seront utilisées dans le même ordre pour fixer les largeurs des colonnes. Pas besoin de spécifier toutes les proportions. S'il y a plus de colonnes que d'éléments dans la liste alors ce qui reste sur la largeur de la zone de texte est divisé équitablement sur les colonnes restantes. Sur cet exemple, la première colonne sera de largeur le quart de la zone de texte, la deuxième la moitié et les deux colonnes restantes auront chacune le huitième. 
+\begin{mini}
+     Les proportions sont en fait appliquées à la largeur globale de la ligne courante diminuée de tous les espaces de séparations. 
+\end{mini}
+
+Pour l'alignement horizontal du texte dans les colonnes: 
+\begin{latex}
+\bcolumn{3}<col align={1=l, 2=l, 3=c}>
+\end{latex}
+Chaque nombre représente encore un numéro de colonne.  Il reçoit en valeur un caractère unique qui indique l'alignement à appliquer:  |l| (alignement à gauche), |c| (alignement au centre) ou |r| (aligment à droite). Si une colonne ne reçoit pas une directive d'alignement, elle adopte l'alignement en cours dans le texte global. 
+\begin{mini}
+Le texte normal est justifié des deux côtés. l'option |l| donne un résultat différent: le texte est justifié seulement à gauche. Il est préférable de toujours l'activer à la place du mode normal quand la largeur de la colonne est réduite. 
+\end{mini}
+
+Maintenant le point tant attendu:  un tableau ne serait pas complet s'il n'a pas d'entête avec des intitulés qui indiquent la nature de ce que contiennent les colonnes. On y arrive avec l'option \og|col head|\fg 
+\begin{latex}
+\bcolumn{3}<col head={1={l}{Programme}, 2={l}{Commentaires}, 3={c}{Période}}>
+\end{latex}
+Pour un numéro de colonne on fournit deux arguments obligatoires entre accolades:  le premier est un caractère qui indique l'alignement horizontal de l'intitulé et le deuxième est l'intitulé lui-même. Si l'argument d'alignement est vide (ie |{}|) alors l'alignment en cours pour toute la colonne est adopté. Les autres valeurs utilisables sont |l|, |c| et |r| et elles ont la même signification que pour l'alignement du texte dans les colonnes. L'entête est encadré verticalement entre deux filets d'épaisseur différentes (une convention typgraphique pour les tableaux) et un autre filet est inséré automatiquement à la fin du \og tableau\fg. 
+
+Pour clore ce tutoriel, on signale qu'il est possible d'ajouter des filets de séparation horizontaux intermédiaires avec la commande \cmd{interrule}.
+\begin{mini}[Propriétés des filets]
+     Des options sont disponibles pour régler les propriétés des filets mais pour ne pas encombrer cette partie elles seront exposées avec d'autres options de l'environnement en annexe dans la partie syntaxe complète.   
+\end{mini}
+
+\subsubsection{Exemples}
+Maintenant des exemples suivis de leurs codes complets.
+
+\paragraph{Exemple 1} un tableau avec entête et sans filets intermédiaires. On compense avec un espace plus grand entre les rangées qu'on règle avec l'option \opt{interskip}.
+\bcolumn{3}<
+     ratio={.4,.4}, 
+     col names={1=prog, 2=com, 3=per}, 
+     col align={3=c}, 
+     col head={1={}{Programme}, 2={}{Commentaires}, 3={}{Période}},
+     interskip=*2,
+>
+Contenu du programme dans la première cellule.
+\bcom      
+Son commentaire n'as pas grand chose à dire.
+\bper      
+Période.
+\bprog*     
+Encore du texte mais sans commentaires svp.  Ce sont les vacances quand même.
+\bper      
+Vacances 
+\bcom*     
+Pas besoin de texte pour faire un commentaire.
+\bper      
+Inconnue
+\ecolumn
+
+\begin{latex}[opts={morekeywords={bprog,bcom,bper}}]
+\bcolumn{3}<
+     ratio={.4,.4}, 
+     col names={1=prog, 2=com, 3=per}, 
+     col align={3=c}, 
+     col head={1={}{Programme}, 2={}{Commentaires}, 3={}{Période}},
+     interskip=*2,
+>
+          Contenu du programme dans la première cellule
+\bcom     Son commentaire n'as pas grand chose à dire 
+\bper     Période
+\bprog*   Encore du texte mais sans commentaires svp.  Ce sont les vacances quand même.
+\bper     Vacances 
+\bcom*    Pas besoin de texte pour faire un commentaire
+\bper     Inconnue
+\ecolumn
+\end{latex}
+
+\paragraph{Exemple 2} le même avec filets de séparation horizontaux et verticaux 
+\bcolumn{3}<
+     ratio={.4,.4},  
+     col names={1=prog, 2=com, 3=per}, 
+     col align={3=c}, 
+     col head={1={}{Programme}, 2={}{Commentaires}, 3={}{Période}},
+     seprule, 
+     >
+               Contenu du programme dans la première cellule
+\bcom      Son commentaire n'as pas grand chose à dire à part remplir le vide.  
+\bper      Période
+\interrule
+\bprog*     Encore du texte mais sans commentaires svp.  Ce sont les vacances quand même.
+\bper      Vacances 
+\interrule
+\bcom*     Pas besoin de texte pour faire un commentaire
+\bper      Inconnue
+\ecolumn
+\ecolumn
+\begin{latex}[opts={morekeywords={bprog,bcom,bper}}]
+\bcolumn{3}<
+     ratio={.4,.4},  
+     col names={1=program, 2=comment, 3=periode}, 
+     col align={3=c}, 
+     col head={1={}{Programme}, 2={}{Commentaires}, 3={}{Période}},
+     seprule, 
+>
+          Contenu du programme dans la première cellule
+\bcom     Son commentaire n'as pas grand chose à dire 
+\bper     Période
+\interrule
+\bprog*   Encore du texte mais sans commentaires svp.  Ce sont les vacances quand même.
+\bper     Vacances 
+\interrule
+\bcom*    Pas besoin de texte pour faire un commentaire
+\bper     Inconnue
+\ecolumn
+\end{latex}
+\paragraph{Exemple 3} et un dernier montrant comment créer un alignement vertical en utilsant la commande \cmd{vfill}
+\bcolumn{2}<
+     ratio={.3}, 
+     seprule width=.4pt, 
+     col align={1=l,2=c},
+     col head={1={}{Compression}, 2={}{Dilatation}}
+>
+          Un paragraphe assez long pour le faire étaler sur plusieurs lignes dans une colonne très étroite.
+\bcolumn  
+\vfill Texte court centré verticalement \vfill
+\ecolumn
+\begin{latex}
+\bcolumn{2}<
+     ratio={.3}, 
+     seprule, 
+     col align={1=l,2=c},
+     col head={1={}{Compression}, 2={}{Dilatation}}
+>
+     Un paragraphe assez long pour le faire étaler sur plusieurs lignes dans une colonne très étroite.
+\bcolumn  \vfill Texte court centré verticalement \vfill
+\ecolumn
+\end{latex}
+
+
+% Outre la possibilité de fusionner des cellules, il manque peut être aussi celle d'altérer la position vertical du contenu d'une cellule. Le texte des cellules sur une même rangée reste aligné vericalement par le haut. 
+
+\begin{mini}[Flottement vertical]
+     Sur une même rangée, le texte de chaque colonne commence verticalement au même niveau. Quoiqu'il soit possible d'imposer un placement vertical du texte dans une \og cellule\fg  aux trois positions possibles, en haut, au centre ou en bas, il n'a pas été jugé utile de l'ajouter comme fonctionnalité native de l'environnement. Un tel alignement est facile à simuler en plaçant convenablement la commande primitive \cmd{vfill} avant et/ou après le contenu de la cellule.
+\end{mini} 
+\subsubsection{Syntaxe Complète}
+\begin{ltxsyntax}
+     \cmditem{bcolumn}\mprm{int}\sprm{keyval}\oprm{int}\oprm{code}\shr 
+     \cmditem{bcolumn}\oprm{int}*\oprm{code}\shr
+     \cmditem{col}\oprm{int}*\oprm{code}\shr 
+     \cmditem{ecolumn}\lvvm
+     Dans la première syntaxe, la première instance de \cmd{bcolumn}, initialise l'environnement multicolonne avec \prm{int} colonnes et se redéfinit elle même pour qu'elle devienne une commande de déplacement dans l'environnement. Une fois l'environnement fermé par \cmd{ecolumn}, elle reprend son rôle d'initialisatrice. Si on utilise le paramètre \mprm{int} alors que l'environnement est déjà ouvert alors \prm{int}, tout comme les \og options\fg suivantes, sont simplement intégrés au flux de texte normal.
+
+     Une fois l'environnement initialisé avec \cmd{bcolumn} la commande \cmd{bcolumn} devient synonyme de la commande au nom plus court \cmd{col}. Celle-ci reste inconnue tant que l'environnement n'a pas été ouvert. Une autre famille de commande est aussi créée dynamiquement à l'intialisation:  \cmd{cone}, \cmd{ctwo}, \cmd{cthree}... qui sont respectivement synonymes de \cmd{col[1]}, \cmd{col[2]},\cmd{col[3]}...
+     
+     \pcit[\mprm{int}] \prm{int} comme on l'a vu, il indique le nombre de dolonnes; 
+     \pcit[\sprm{keyval}] pour les options de l'environnement. Si ce paramètre est utilisé alors que l'environnement est déjà ouvert, il est considéré comme du texte normal et ajouté au texte qui suit la commande;  
+     \pcit[\oprm{int}] \prm{int} indique la colonne dans laquelle le texte suivant va être placé. Si ce paramètre est absent alors la colonne suivante est selectionnée et dans le cas où on se trouve déjà dans la dernière colonne d'une rangée, une nouvelle rangée est créee et la première colonne est selectionnée; 
+     \pcit[$\ast$] avec ce paramètre optionnel on impose la création d'une nouvelle rangée. Si \oprm{int} a été utilisé avant alors on se deplace directement dans la \prm{int}\up{ème} colonne. S'il est absent on se place dans la première colonne; 
+     \pcit[\oprm{code}] comme pour \cmd{bprogram}, le code \prm{code} est placé en pleine largeur tout en se plaçant dans à la colonne \prm{int}  pour le texte suivant;  
+     \pcclose 
+
+Une fois l'environnement initialisé, la commande \cmd{bcolumn} (ou \cmd{col}) permet d'y faire tout genre de déplacement. Elle a un comportement plus primitif et pas facile à cerner:
+\pcit  comme on l'a vu, sans paramètre, elle se déplace de colonne en colonne et crée une nouvelle rangée une fois la rangée en cours épuisée. Sans le paramètre \oprm{int}  elle ne provoque jamais d'erreur;
+\pcit avec l'instruction \cmd{bcolumn}\oprm{int} elle se déplace directement dans la \prm{i}\up{ème} colonne. Une erreur est declenchée si \prm{i} est en dehors des limites du tableau; 
+\pcit avec l'instruction \cmd{bcolumn}[+\prm{i}] elle se décale de \prm{i} colonne(s) vers la droite à partir de la position courante. Elle provoque une erreur si on déborde des limites du tableau. 
+\pcit avec l'une des instructions \cmd{bcolumn}\oprm{i}|*| ou 
+\cmd{bcolumn}[+\prm{i}]|*| elle crée d'abords une nouvelle rangée et éxécute le mouvement demandé. 
+\pcclose 
+
+En fait, les commandes de la famille \cmd{cone} utilsent en interne \cmd{col}. La commande \cmd{cfour} est par exemple exactement la même chose que \cmd{col}|[4]|.  
+
+
+\begin{mini}
+      Il peut être toutefois préférable, pour plus de clarté du code source, d'utiliser les commandes de la famille \cmd{cone}, ou bien des noms personalisés (voir le tutoriel précédent).
+\end{mini}
+
+La liste, non exhaustive\footnote{Les noms et les effets des options ne sont pas encore définitivement arrêtés}, des options utilisables dans \prm{keyval}: 
+
+\begin{optionlist}
+     \optitem{ratio}{\mprm{list}} \prm{list} est une liste de \prm{num} qui indiquent dans l'ordre les proportions de largeur qu'auront successivement les colonnes. Le ratio est appliqué à la largeur globale de la zone de texte moins la somme des espaces de séparations. S'il y a moins de nombres dans la liste que de colonnes alors les colonnes restantes se partageront l'espace qui reste sur la ligne. 
+     \optitem{col widths}{\mprm{list}}
+     Une version bien plus polyvalente que l'option \opt{ratio}.  \prm{list} est une liste d'options de la forme :
+     
+     {\centering \kvopt{\prm{int}}{\mprm{dim1}{\mprm{dim2}}}\par} 
+     Les dimensions \prm{dim1},\prm{dim2} désignent la largeur de la colonne \prm{i} et celle de l'espace de séparation qui la suit. Comme pour toutes les options «|col| ...», il n'est pas nécessaire de fournir les spécifications de toutes les colonnes. Dans ce cas les colonnes absentes se partagent l'espace restant sur la ligne. Si l'un des deux arguments \mprm{dim1} ou \mprm{dim2} est vide alors une valeur par défaut est adoptée : la colonne \prm{i} recevra sa part de ce qui reste sur la colonne pour le premier et sera suivi de l'espace de séparation commun pour le deuxième. Il est possible aussi de spécifier les deux dimensions en terme de proportions. Dans ce cas elles doivent être sous la forme |*|\prm{num1} et/ou |*|\prm{num2} (sans unité). Pour \prm{num1} la colonne sera de largeur égale à la largeur commune des colonnes sans spécification multipliée par le facteur \prm{num1}. Pour \prm{num2}, l'espace de séparation sera celui normal multiplié par le facteur \prm{num2}.   
+     
+     \texttitle{Exemple:} sur un tableau à 4 colonnes, avec l'option 
+
+     {\centering |col widths={1={*2}{}, 3={1cm}{*.5}}|\par} 
+      on obtient : la troisième colonne avec une largeur de 1cm et l'espace de séparation qui la suit égale la moitié de celui normal; les colonnes 2 et 4 avec la même largeur et la colonne 1 deux fois cette dernière; les autres espaces de séprations sont égaux à l'espace normal. 
+     \begin{mini}
+     Voilà! Toutes les spéficiations possibles, et même plus, avec un tableau \LaTeX{} créé avec le package \sty{tabularx} sont là. Merci \sty{paracol}. 
+     \end{mini}
+
+     \optitem{col names}{\mprm{list}} \prm{list} est une liste d'options de la forme \kvopt{\prm{int}}{\prm{csname}}. Le nombre \prm{int} représente le numéro d'une colonne et \prm{csname} est utilisé pour créer la commande \cmd{b\prm{csname}} dont la signification est équivalente à \cmd{col}[\prm{int}]. Une erreur est declenchée si \prm{int} est au delà des limites du tableau.
+
+     \optitem{col styles}{\mprm{list}} \prm{list} est ici une liste d'options de la forme \kvopt{\prm{int}}{\prm{code}}, le code \LaTeX{} \prm{code} est alors exécuté au début de chaque cellule sur la \prm{i}\textsuperscript{ème} colonne. Il permettera par exemple d'appliquer un style de police différent pour la colonne.  
+     \optitem{col align}{\mprm{list}} cette fois \prm{list} est une liste d'options de la forme \kvopt{\prm{int}}{\prm{char}} avec \prm{char} qui indique l'alignement horizontal du texte dans la colonne. Les valeurs possibles sont \opt{r}, \opt{c} ou \opt{l}. 
+     \optitem{col head}{\mprm{list}} \prm{list} est une liste d'options de la forme \kvopt{\prm{int}}{\mprm{char}\mprm{text}}  où \prm{text} sert comme intitulé de la colonne dans l'entête du tableau et \prm{char} indique l'alignement de celui-ci. Si \mprm{char} est vide alors l'alignement en cours pour la colonne est utilisé. La présence de l'option \opt{col head} active automatiquement l'insertion de l'entête au début et un filet de terminaison à la fin du tableau. 
+     \optitem[\{0.4pt\}\{strokecol\}]{seprule}{\mprm{dim}\mprm{color}} active les filets de séparations verticaux entre toutes les colonnes et réglent  leurs propriétés. \prm{dim} est l'épaisseur du filet, sa valeur par défaut est selon le standard \LaTeX{} |0.4pt|. \prm{color} est le nom d'une couleur qui sera utilisée pour le filet. Sa valeur par défaut est \opt{strokecol} qui est le nom interne d'une couleur qui est utilisée pour tout type de filet. Si l'option \opt{seprule} est utilisée sans valeur alors les filets sont activés et ils utilisent les valeurs par défaut. 
+\end{optionlist}
+\end{ltxsyntax}
+
+
+\subsubsection{Outils annexes}
+\begin{ltxsyntax}
+\cmditem{interskip}\mprm{frac}\lvvm
+     Permet, alors qu'on est en mode multicolonne, d'insérer correctement un saut vertical élastique entre deux rangées. Ce saut est de valeur égale à \len{parskip} multiplié par le fraction \prm{frac} fournie en argument.   
+\cmditem{interrule}\sprm{keyval}\lvvm
+Permet de tracer un fillet horizontal sur toute la largeur de la zone de texte alors qu'on se trouve dans un contexte multicolonne et sans quitter celui-ci. 
+On peut changer les propriétés du filet en utilisant le paramètre $<\;>$ avec les options suivantes: 
+\begin{optionlist}
+     \optitem[0.4pt]{h}{\prm{dim}}
+     fixe l'épaisseur du filet. Sa valeur par défaut est de \texttt{0.4pt} (|h| pour height);  
+     \optitem[\textcolor{cgorangestroke}{\rule{1em}{1ex}}]{c}{\prm{color}}
+     le nom d'une couleur qui sera utilisée pour tracer le filet; 
+     \optitem[3pt]{b}{\prm{dim}}
+     fixe l'espace vertical non résiliable avant le filet (|b| pour before).  
+     \optitem[3pt]{a}{\prm{dim}}
+     la même chose mais pour l'espace vertical après le filet (|a| pour after). 
+\end{optionlist} 
+
+Sans l'argument optionnel la commande \cmd{interrule} revient ainsi à l'instruction: 
+
+\lstinline+\interrule<h=0.4pt, a=3pt, b=3pt>+
+
+Les commandes \cmd{interskip} et \cmd{interrule} déclenchent des erreurs si elles sont utilisées en dehors d'un contexte multicolonne. 
+\end{ltxsyntax} 
+
+% \begin{mini}
+% Vous l'aurez compris, le préfixe \cmd{pc} dans les noms de toutes ces commades vient du fait qu'elles sont prévues pour fonctionner dans un enviromment \env{paracol}.
+% \end{mini}
+
+
+
+
+
+\subsection{Notes de bas de page et éléments flottants}
+Dans cette version les notes de bas de page (\cmd{footnote}) sont insérées de manière normale, en bas de la page en cours 
+\begin{mini}
+Dans les vesrions précédentes elles étaient insérées en bas de chaque colonne, mais seulement lorsque l'environnement multicolonne est fermé. Éventuellement sur une autre page.
+\end{mini}
+
+
+%\section{Les fichiers maîtres}
+\subsection{Recommendations pour la définition de nouvelles commandes}
+Dans le cas ou un fichier de base utilise des commandes ou des extensions non prévues par les fichiers du projet, il suffit de  créer un fichier qui porte le même nom que le fichier de base avec l'extension |.def| à côté du fichier maître générique et qui contient le nécessaire. Insérer ensuite (exceptionnellement) une ligne pour son inclusion dans le \emph{préambule} du fichier  maître (avant \cmd{begin}|{document}|) . 
+
+Par exemple:  \cmd{input} |chi-1e-mp---.def|. Sachant que |chi-1e-mp---.def| contiendrait quel\-que chose comme
+\begin{latex}
+\usepackage{chemarrow}
+\usepackage{chemexec}
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+. . . 
+\end{latex}
+Le cas échéant une compilation de ces fichiers sera préparée pour la production des livrets.
+
+
+
+\section{Construction d'un fichier maître}
+\subsection{Options de \texttt{cpgelvrt}}
+l'utilisation de |cpgelvrt.cls|, une fois qu'il est mis à portée du compilateur\footnote{à coté du fichier à compiler par exemple} s'utilise en insérant en début du fichier maitre  une ligne de la forme
+
+\cmd{documentclass}\oprm{options}|{cpgelvrt}|
+
+Les options reconnues se divisent en deux catégories. Celles en relation avec la présentation et celle qui indiquent le type de livret à produire. 
+
+Dans la deuxième catégorie, on dispose des options: 
+\begin{marglist}
+\item[\spotcolor generic] pour un fichier maître générique (type {\tt 00}). Ce type de fichier ne sert que dans la phase de rédaction ou de traitement d'un fichier de base; 
+
+\item[\spotcolor eleve] pour la production d'un livret à destination des élèves. Il contient les programmes de toutes les matières pour une filière et un niveau donnés. Ne contient pas de parties (\cmd{insertpart}); 
+
+\item[\spotcolor prof] pour la production d'un livret à destination des professeurs (type {\tt 11}). Il contient tous les programmes pour une matière et une filière donnés~. Ne contient pas de parties (\cmd{insertpart});
+
+\item[\spotcolor inspec] pour la production d'un livret à destination des inspecteurs (type {\tt 12}). Il contient tous les programmes d'une matière, pour toutes les filières et tous les niveaux. Les parties sont constituées des programmes pour une filière; 
+
+\item[\spotcolor admin] pour la production d'un livret à destination des administrations (type {\tt 21}). Il contient tous les programmes pour une filière donnée, toutes matières et tous niveaux confondus. Les parties sont constitués des programmes pour un même niveau; 
+
+\item[\spotcolor autre] pour les livrets destinés aux autres partis concernés par les nouveaux programmes des \nom{cpge} (type {\tt 22}).
+
+\item [\spotcolor other] option qui permet d'utiliser |cpgelvrt.cls| pour produire autre chose que les livrets des programme (ce manuel par exemple) tout en appliquant le style du projet. Elle désactive les routines de traitement des informations relatives aux fichiers des programmes.
+\end{marglist}
+
+Chaque option applique les directives générales propres au type de fichier maître pour la gestion des parties, la construction des titres et éventuellement la production des couvertures. (voir aussi la commande \cmd{setinfo} plus loin). L'option par défaut est |generic|.
+
+\bigskip
+Les autres options sont
+\begin{optionlist}
+\legitem{NB} pour produire un document en niveau de gris. Les livrets sont par défaut produit en couleurs conformément à la charte graphiques du ministère; 
+\optitem[24cm]{height}{\prm{dim}} option facultative pour indiquer la  hauteur du format à retenir pour le livret. La valeur par défaut, en cas de non utilisation de l'option est {\tt 24cm}; 
+\optitem[19cm]{width}{\prm{dim}} la même chose mais pour la largeur du livret; 
+%\legitem {fonts} option pour activer le jeu officiel de polices de caractères;  
+\legitem{cover} option pour la production de la couverture seulement; 
+\optitem[0mm]{coversep}{\prm{dim}} mesure de réserve qui s'ajoute au double de la largeur du livret pour constituer la largeur de la couverture.
+\end{optionlist}
+
+\subsection{Commandes principales\label{sec:cmdmstr}}
+Trois commandes  assurent par un système clé/valeur la passation des informations concernant le fichier en cour de traitement. Il s'agit des commandes \cmd{setinfo}, \cmd{insertpart} et \cmd{includebase}. Chacune remplit un rôle particulier qui est décrit dans la suite.
+
+Les clés sont communes aux trois commandes : |filiere|, |niveau| et |matiere|. Leurs noms sont évocateurs de leurs significations. Le tableau suivant indique les valeurs qui peuvent leurs être affectées. 
+
+
+\begin{center}
+\begin{tabular}{@{}>{\ttfamily}l@{\hskip2em}>{\ttfamily}l@{}}
+\toprule
+\normalfont Clé & \normalfont Valeurs possibles\\
+\midrule
+filiere & mp, psi, pc, tsi, ecs, ect \\[1ex]
+niveau & 1 ou 2 \\[1ex]
+matiere & mat, phy, chi, sci, gee, gem, egm, eed, ehg, fra, ara, ang \\
+\bottomrule 
+\end{tabular}
+
+\medskip 
+\pcit<b>* |sci| = sciences de l'ingénieur
+\pcit |gee| = génie électrique 
+\pcit |gem| = génie mécanique
+\pcit |egm| = sciences de gestion et management
+\pcit |eed| = économie-droit
+\pcit |ehg| = histoire, géographie et géopolitique.
+\pcclose
+\end{center}
+
+\begin{mini}
+Il est indispensable de respecter la syntaxe des clés et de leurs valeurs sous peine d'erreur de compilation.
+\end{mini}
+
+% \begin{mini}
+% Une autre clé est disponible dans le cas où on veut produire un livret, de type 11 ou 12, et qui contient les programmes de deux matières (biologie et géologie par exemple). Elle porte le nom de |matiere2| et s'utilise comme (et forcément avec) |matiere|.
+% \end{mini}
+
+La syntaxe de ces commandes, dont le résultat dépend dynamiquement de l'option de la classe |cpgelvrt| précisant le type de livret à produire (|generic|, |eleve|, |prof| …), est de la forme
+\begin{ltxsyntax}
+\cmditem{setinfo}{options}\shr
+\cmditem{insertpart}[options]\shr
+\cmditem{includebase}[options]{fichier}\lvvm
+\prm{options} est ici une ou plusieurs entrées de la forme |clé=valeur| utilisant les couples du tableau précédent et séparées par des virgules.
+\cmditem{setinfo}\lvvm n'a d'autre fonction que d'affecter des valeurs à l'une ou à plusieurs des variables |filiere|, |niveau| et |matiere|.
+
+
+Ce qui permet par exemple, juste après le \cmd{begin}|{document}|, d'entrer les informations nécessaires à la génération du titre du livret avec \cmd{maketitle}. Elle est  utilisable partout dans le document pour éventuellement compléter une information manquante. Les valeurs affectées aux variables le sont  de façon permanente et ne peuvent être résiliées que par une autre commande \cmd{setinfo}. Comme les commandes \cmd{insertpart} et \cmd{includebase} utilisent elles même \cmd{setinfo}, leur utilisation avec des paramètres optionnels revient à changer de façon permanente les valeurs des clés qu'elle modifient.
+
+Par exemple, lorsque on traite le fichier de type 12 pour les mathématiques 
+\begin{latex}
+\setinfo{matiere=mat}
+\maketitle
+\end{latex}
+La commande \cmd{setinfo} renseigne la clé |matiere|. Ce qui est suffisant pour   générer la page de garde avec \cmd{maketitle} pour ce livret. 
+
+\cmditem{insertpart}\lvvm insère le titre d'une partie en utilisant éventuellement les informations fournies ou déjà disponibes. 
+
+\textbf{Ex.: } pour le même  fichier de type 12, la première partie est introduite par 
+\\
+ \cmd{insertpart}|[filiere=mp]|, la deuxième par \cmd{insertpart}|[filiere=psi]| …
+
+\cmditem{includebase}\lvvm est responsable de l'inclusion d'un fichier de base tout en fournissant les informations nécessaires (manquantes). Le paramètre \prm{fichier} est le nom du fichier de base à inclure (sans l'extension \texttt{.tex} et sans indication du chemin, juste le nom du fichier lui même).
+
+\textbf{Ex.: } toujours pour le même fichier de type 12, et dans la première partie
+\\
+\cmd{includebase}|[niveau=1]{mat-1e-mpsi-}|\\
+\cmd{includebase}|[niveau=2]{mat-2e-mp---}|
+
+\end{ltxsyntax}
+\subsubsection{Exemple: } Contenu du fichier |11-prg-chi-mp---.tex|
+\begin{latex}
+\documentclass[prof]{cpgelvrt}
+\begin{document}
+\setinfo{filiere=mp,matiere=chi}
+\maketitle
+\includebase[niveau=1]{chi-1e-mpsi-}
+\includebase[niveau=2]{chi-2e-mp---}
+\tableofcontents
+\end{document}
+
+\end{latex}
+
+
+%\lstinputlisting{../Masters/11-prg-chi-mp---.tex}.
+\subsection{Création d'une couverture}
+Il n'y a pour cela, pas grand chose à faire. Placer l'option |cover| et celle du type de fichier, utiliser \cmd{setinfo} pour renseigner les différentes informations exigibles et placer ensuite une commande \cmd{maketitle}.
+
+Les fichiers des couvertures devraient être crées séparément des fichiers maître. Un fichier de couverture pour chaque fichier maître. Son nom est déduit du fichier maitre en remplaçant |prg| par |cov|.
+
+\subsubsection{Exemple}
+Contenu du fichier |11-cov-chi-mp---.tex|
+\begin{latex}
+\documentclass[prof,cover,coversep=6mm,decolength=58,fonts]{cpgelvrt}
+\begin{document}
+\setinfo{matiere=bio,filiere=bcpst}
+\maketitle
+\end{document}
+
+\end{latex}
+
+
+\section{Informations supplémentaires}
+
+
+\subsection{Mise en page}
+\texttt{cpgelvrt} invoque l'extension \env{geometry} pour regler les détails de la mise en page. Les différentes mesures de la mise en page sont calculées automatiquement à partir des seules valeurs affectées aux clés |width| et |height| lors du chargement de la classe. Valeurs qui désignent respectivement la largeur et la hauteur du papier à utiliser.
+
+Par exemple
+\begin{latex}
+\documentclass[width=19cm,height=24cm, ...]{cpgelvrt}
+\end{latex}
+
+\begin{mini}
+\small\sffamily
+En cas de non utilisation des clés |width| et |height| les valeurs par défauts |19cm| et |24cm| leurs sont affectées.
+\end{mini}
+
+
+
+\subsection{Polices de caractères}
+Pour les polices de caractères, les commandes suivantes sont prévues: 
+\cmd{CommentFont}, \linebreak \cmd{TitlingFont}, \cmd{HeadFont}, \cmd{BlackFont}, \cmd{ObjFont}, \cmd{ContentsFont}. Ce sont des macros commandes \LaTeX{} et on peut les redéfinir en utilisant \cmd{renewcommand}. Normalement elles sont définies dans les fichiers \texttt{gtdfont.sty} et \texttt{gtdxfont.sty}, mais pour une utlisation générique elles sont définies comme suit:
+\begin{ltxsyntax}
+\cmditem{newcommand}\verb+\ObjFont{\sffamily\itshape}+
+\normalcolor\linebreak
+police utilisée dans les environnements \env{objectif} et \env{objectif*}; 
+
+\cmditem{newcommand}\verb+\TitlingFont{\sffamily}+
+\shr
+\cmditem{newcommand}\verb+\BlackFont{\sffamily\bfseries}+\normalcolor
+\lvvm
+polices utilisées dans les titres; 
+
+\cmditem{newcommand}\verb+\HeadFont{\sffamily\scshape}+\normalcolor\lvvm
+police utilisée dans les entêtes et pieds de pages.
+\end{ltxsyntax}
+
+\subsection{Couleur}
+Les documents produits, le sont par défaut en couleur. La mise en forme et la palette des couleurs est conforme à la charte graphique du Ministère (Voir tableau \textsc{Tab}.\ref{tab:col} page \pageref{tab:col}). Les couleurs sont  encodées en \textsc{cmjn}.
+
+Néanmoins on peut facilement convertir l'espace des couleurs en niveau de gris avec la commande standard (de l'extension \env{xcolor}): 
+\cmd{selectcolormodel}|{gray}| 
+
+Ce qui aura l'avantage de conserver les tonalités des couleurs de la charte.
+L'option |NB| de  la classe de document |cpgelvrt| permet de produire le document en niveau de gris en appliquant en interne la commande précédente .
+
+\def\lignetab#1{#1 &  \colorbox{#1}{\strut\hspace*{1.5cm}}}
+
+\begin{center}
+\begin{longtable}{@{}>{\ttfamily}lc>{\small}l@{}}
+\toprule
+Nom &  Couleur & \multicolumn{1}{c}{définition} \\
+\midrule
+\lignetab{cgbluetext} & \cmd{definecolor}|{cgbluetext}{cmyk}{1,.9,.1,0}|\\
+\lignetab{cgbluefill} & \cmd{definecolor}|{cgbluefill}{cmyk}{1,.64,0,.6}|\\
+\lignetab{cgorangetext}&\cmd{definecolor}|{cgorangetext}{cmyk}{0,.7,1,0}|\\
+\lignetab{cgorangestroke}&\cmd{definecolor}|{cgorangestroke}{cmyk}{0,.4,.9,0}|\\
+\lignetab{cgorangefill}&\cmd{definecolor}|{cgorangefill}{cmyk}{0,.28,.76,0}|\\
+\lignetab{cggold1}&\cmd{definecolor}|{cggold1}{cmyk}{.07,.27,.94,.16}|\\
+\lignetab{cggold2}&\cmd{definecolor}|{cggold2}{cmyk}{.29,.3,.62,.04}|\\
+\lignetab{cggraytext}&\cmd{colorlet}|{cggrayfill}{black!20}|\\
+\lignetab{cggrayfill}&\cmd{colorlet}|{cggraytext}{black!70}|\\
+\bottomrule
+\caption{Les couleurs de la charte avec leurs définitions}
+\label{tab:col}
+\end{longtable}
+\end{center}
+
+
+
+\subsection{Extensions utilisées par les fichiers styles}
+%\begin{center}
+\bgroup
+%\centering
+\renewcommand{\arraystretch}{1.6}
+\setstretch{.9}
+\begin{tprogram}{@{}T{.25\textwidth}Y@{}}
+\toprule 
+Extension & utilité \\ \midrule%
+\sty{xkeyval}\footnote{\sty{xkeyval} est responsable de la gestion des options de la classe. Une migration vers \sty{pgfkeys} est prévue}, \sty{pgfkeys}\footnote{\sty{pgfkeys} est responsable du système clé/valeur pour les fichiers de base.}, \sty{xstring}\footnote{\sty{xtring} est à la base des mots clés pour le style des compteurs}, \sty{etoolbox} & pour l'aspect programmation. \\
+\sty{xcolor} & gestion avancée  de la  couleur. \\
+\sty{hyperref} & pour tout ce qui touche aux lienx hypertexte et aux bookmark \nom{pdf} \\
+\sty{tikz}  & pour l'ajout d'éléments graphiques à la présentation. \\
+%\env{framed} & redoutable petite extension pour produire des cadres capables de se subdiviser sur plusieurs pages (n'est plus utilisée) \\
+\sty{paracol} & Peut être l'extension la plus importante utilisée par le projet. C'est elle qui rend possible la présentation sous formes de colonnes le texte du programme et les commentaires associés.\\
+\sty{nccparskip}\linebreak et \sty{setspace} & petites extensions pour modifier correctement le sauts de paragraphe et interligne. \\
+\sty{titlesec} et \sty{titletoc} & pour la personnalisation des titres, des entêtes/pieds de page et de la table des matières. \\
+\sty{enumitem} & pour la personnalisation des listes \\
+\sty{eso-pic} & pour l'insertion de la bande grise sur les côtés extérieurs de toutes les pages du document. \\
+\sty{flowframe} & extension qui permet de subdiviser la page en plusieurs frames. Utilisée dans la mise en page des couvertures.\\
+\bottomrule
+\caption{Les extensions utilisées par les fichiers styles du projet}
+\end{tprogram}
+\egroup
+%\end{center}
+
+\closehandle
+\tableofcontents
+
+\end{document}
+
+
+
+
+
+\subsection{Note à propos des polices de caractères}
+Les deux choix offerts par les fichiers \texttt{gtdfont.sty} et \texttt{gtdxfont.sty} opposent en fait deux mondes: 
+
+\begin{description}[font=\spotcolor\ttfamily\bfseries]
+
+\item [gtdfont.sty] utilise des polices Open Source:  \police{Linux Libertine}, \police{Linux Biolinum}, \police{PT Serif} et \police{PT Sans}. L'apparence finale est largement acceptable, moins les risques de licence que peut poser l'utilisation de polices propriétaires.
+
+\item [gtdxfont.sty] offre, à travers l'utilisation de polices propriétaires, une qualité équivalente à ce que propose des logiciels (très chers) de PAO, mais présentera peut être un problème de licence d'utilisation des dites polices. Il n'est toutefois pas sûr que les différents éditeurs\footnotemark des polices utilisées aient une représentation commerciale dans notre pays. 
+\footnotetext{\police{Thesis} est édité par \nom{Lucas de Groot} (\url{www.lucasfonts.com}) et \police{Meta Pro} par \textsf{FSI Fonts und Software GmbH}}
+
+Quoiqu'il en soit, en cas d'utilisation du compilateur \XeLaTeX{} sans recours à \texttt{gtdxfont.sty} (il suffit de mettre ce dernier hors d'atteinte), Un jeu de polices plus courantes est activé. Il s'agit des polices Microsoft, \police{Cambria}, \police{Candara} et \police{Consolas}. Elles sont installées par défaut dans les versions récentes de Microsoft Windows\texttrademark{} et leurs licences  autorise tout à fait leur utilisation dans des projets comme les livrets en préparation
+\footnote{Les polices licenciées par Adobe (de meilleure qualité) ont été évitées}. 
+\end{description}
+\end{document}
+
+
+\cmditem{includebase}{fichier de base}\lvvm\normalcolor
+où \prm{fichier de base} est le nom du fichier de base sans l'extension |.tex|. Cette commande s'occupera de l'insertion du fichier de base ainsi que de l'intégration des informations relatives au programme dans différentes parties du document produit (titre de chapitre, pieds de page, \ldots).
+
+\bigskip
